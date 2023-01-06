@@ -1,0 +1,4 @@
+[24-Nov-2021 10:12:13 America/New_York] PHP Deprecated:  The each() function is deprecated. This message will be suppressed on further calls in /home/hubcom/public_html/pos/extensiones/tcpdf/tcpdf.php on line 16542
+[24-Nov-2021 10:12:13 America/New_York] PHP Warning:  Invalid argument supplied for foreach() in /home/hubcom/public_html/pos/extensiones/tcpdf/pdf/factura.php on line 112
+[24-Nov-2021 10:14:27 America/New_York] PHP Deprecated:  The each() function is deprecated. This message will be suppressed on further calls in /home/hubcom/public_html/pos/extensiones/tcpdf/tcpdf.php on line 16542
+[24-Nov-2021 10:14:27 America/New_York] PHP Warning:  Invalid argument supplied for foreach() in /home/hubcom/public_html/pos/extensiones/tcpdf/pdf/factura.php on line 112

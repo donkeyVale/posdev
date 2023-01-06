@@ -1,0 +1,18 @@
+[17-Oct-2021 11:49:47 America/New_York] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Connection timed out in /home/hubcom/public_html/pos/modelos/conexion.php:9
+Stack trace:
+#0 /home/hubcom/public_html/pos/modelos/conexion.php(9): PDO->__construct('mysql:host=10.8...', 'mvazquez', 'Donkey3673518')
+#1 /home/hubcom/public_html/pos/modelos/productos.modelo.php(25): Conexion::conectar()
+#2 /home/hubcom/public_html/pos/controladores/productos.controlador.php(15): ModeloProductos::mdlMostrarProductos('productos', NULL, NULL)
+#3 /home/hubcom/public_html/pos/ajax/datatable-productos.ajax.php(22): ControladorProductos::ctrMostrarProductos(NULL, NULL, 'id')
+#4 /home/hubcom/public_html/pos/ajax/datatable-productos.ajax.php(118): TablaProductos->mostrarTablaProductos()
+#5 {main}
+  thrown in /home/hubcom/public_html/pos/modelos/conexion.php on line 9
+[17-Oct-2021 11:49:48 America/New_York] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Connection timed out in /home/hubcom/public_html/pos/modelos/conexion.php:9
+Stack trace:
+#0 /home/hubcom/public_html/pos/modelos/conexion.php(9): PDO->__construct('mysql:host=10.8...', 'mvazquez', 'Donkey3673518')
+#1 /home/hubcom/public_html/pos/modelos/productos.modelo.php(25): Conexion::conectar()
+#2 /home/hubcom/public_html/pos/controladores/productos.controlador.php(15): ModeloProductos::mdlMostrarProductos('productos', NULL, NULL)
+#3 /home/hubcom/public_html/pos/ajax/datatable-productos.ajax.php(22): ControladorProductos::ctrMostrarProductos(NULL, NULL, 'id')
+#4 /home/hubcom/public_html/pos/ajax/datatable-productos.ajax.php(118): TablaProductos->mostrarTablaProductos()
+#5 {main}
+  thrown in /home/hubcom/public_html/pos/modelos/conexion.php on line 9

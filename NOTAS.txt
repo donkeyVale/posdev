@@ -1,0 +1,6 @@
+Para utilizar lector de codigo de barras:
+1. Comentar de producto.js "CAPTURANDO LA CATEGORIA PARA ASIGNAR CÓDIGO".
+2. En productos.php en la seccion "ENTRADA PARA EL CODIGO", del input con el id NuevoCodigo eliminar la opcion "readOnly".
+
+Para utilizar el sistema sin impresora de tickets:
+1. Comentar las lineas del archivo ventas.controlador.php desde la linea 141 al 209.
