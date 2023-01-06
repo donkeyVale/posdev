@@ -136,6 +136,7 @@ MODAL AGREGAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA LA MARCA -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -169,6 +170,7 @@ MODAL AGREGAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA PRECIO COMPRA/VENTA -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -183,7 +185,8 @@ MODAL AGREGAR PRODUCTO
                 </div>
               </div>
             </div>
-
+            
+            <!-- ENTRADA PARA FECHA DE VENCIMIENTO -->
             <div class="form-group row">
 <!--              <div class="col-xs-6">-->
 <!--                <div class="input-group">-->
@@ -199,6 +202,7 @@ MODAL AGREGAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA TIPO DE PRODUCTO -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -228,6 +232,7 @@ MODAL AGREGAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA CANTIDAD DE ALERTA -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -328,6 +333,7 @@ MODAL EDITAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA LA MARCA -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -361,6 +367,7 @@ MODAL EDITAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA PRECIO DE COMPRA/VENTA -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -376,6 +383,7 @@ MODAL EDITAR PRODUCTO
               </div>
             </div>
 
+            <!-- ENTRADA PARA FECHA DE VENCIMIENTO -->
             <div class="form-group row">
 <!--              <div class="col-xs-6">-->
 <!--                <div class="input-group">-->
@@ -391,6 +399,7 @@ MODAL EDITAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA TIPO DE PRODUCTO -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
@@ -420,6 +429,7 @@ MODAL EDITAR PRODUCTO
               </div>
             </div>
             
+            <!-- ENTRADA PARA CANTIDAD DE ALERTA -->
             <div class="form-group row">
               <div class="col-xs-6">
                 <div class="input-group">
