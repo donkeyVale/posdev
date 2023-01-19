@@ -9,7 +9,7 @@ class ControladorProveedores{
 	static public function ctrCrearProveedor(){
 
 		if(isset($_POST["nuevoProveedor"])){
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoProveedor"]) &&
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\. ]+$/', $_POST["nuevoProveedor"]) &&
 			   preg_match('/^[-0-9]+$/', $_POST["nuevoRUC"]) &&
 			   preg_match('/^[^0-9][a-zA-Z0-9_\.\-]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["nuevoEmail"]) && 
 			   preg_match('/^[()\-0-9 ]+$/', $_POST["nuevoTelefono"]) && 
