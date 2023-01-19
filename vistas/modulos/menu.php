@@ -5,7 +5,7 @@
 		if($_SESSION["perfil"] == "Administrador"){
 			echo 	'<li class="active">
 						<a href="inicio">
-							<i class="fa fa-home"></i>
+							<i class="fa-solid fa-house"></i>
 							<span>Inicio</span>
 						</a>
 					</li>
@@ -29,37 +29,37 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="productos">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Productos</span>
 								</a>
 							</li>
 							<li>
 								<a href="categorias">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Categorías</span>
 								</a>
 							</li>
 							<li>
 								<a href="marcas">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Marcas</span>
 								</a>
 							</li>
 							<li>
 								<a href="unidades">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Unidades</span>
 								</a>
 							</li>
 							<li>
 								<a href="colores">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Colores</span>
 								</a>
 							</li>
 							<li>
 								<a href="calces">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Calces</span>
 								</a>
 							</li>
@@ -79,13 +79,13 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="depositos">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Depósitos</span>
 								</a>
 							</li>
 							<li>
 								<a href="transferencias">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Transferencias</span>
 								</a>
 							</li>
@@ -105,19 +105,19 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="clientes">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Clientes</span>
 								</a>
 							</li>
 							<li>
 								<a href="cumpleanios">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Cumpleaños</span>
 								</a>
 							</li>
 							<li>
 								<a href="gruposcliente">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Grupo de Clientes</span>
 								</a>
 							</li>
@@ -138,7 +138,7 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="proveedores">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Lista de Proveedores</span>
 								</a>
 							</li>
@@ -149,7 +149,7 @@
 		if($_SESSION["perfil"] == "Administrador"){
 			echo   '<li class="treeview">
 						<a href="#">
-							<i class="fa fa-credit-card"></i>
+							<i class="fa-solid fa-money-bill-1-wave"></i>
 							<span>Gastos</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
@@ -158,7 +158,7 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="categoriagastos">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Categoría de Gastos</span>
 								</a>
 							</li>
@@ -169,7 +169,7 @@
 		if($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor"){
 			echo 	'<li class="treeview">
 						<a href="#">
-							<i class="fa fa-users"></i>
+							<i class="fa-solid fa-cart-shopping"></i>
 							<span>Ventas</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
@@ -178,13 +178,13 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="ventas">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Administrar ventas</span>
 								</a>
 							</li>
 							<li>
 								<a href="crear-venta">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Crear venta</span>
 								</a>
 							</li>';
@@ -192,23 +192,23 @@
 					if($_SESSION["perfil"] == "Administrador"){
 					echo 	'<li>
 								<a href="reportes">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Reporte de ventas</span>
 								</a>
 								<a href="control-ventas">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Control de Ventas </span>
 								</a>
 								<a href="terminos-pago">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Términos de Pagos</span>
 								</a>
 								<a href="cajas">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Cajas</span>
 								</a>
 								<a href="sucursales">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Sucursales</span>
 								</a>
 							</li>';
@@ -216,7 +216,7 @@
 					</li>
 					<li class="treeview">
 						<a href="#">
-							<i class="fa fa-users"></i>
+							<i class="fa-solid fa-cash-register"></i>
 							<span>Cajas</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
@@ -225,13 +225,13 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="aperturas">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Apertura de Cajas</span>
 								</a>
 							</li>
 							<li>
 								<a href="cierre-cajas">
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Cierre de Cajas</span>
 								</a>
 							</li>';
@@ -242,7 +242,7 @@
 		if($_SESSION["perfil"] == "Administrador" ){
 			echo 	'<li class="treeview">
 						<a href="#">
-							<i class="fa fa-list-ul"></i>
+							<i class="fa-solid fa-wallet"></i>
 							<span>Compras</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
@@ -251,13 +251,13 @@
 						<ul class="treeview-menu">
 							<li>
 								<a href="compras">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Administrar Compras</span>
 								</a>
 							</li>
 							<li>
 								<a href="crear-compra">	
-									<i class="fa fa-circle-o"></i>
+									<i class="fa-solid fa-check"></i>
 									<span>Crear Compra</span>
 								</a>
 							</li>

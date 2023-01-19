@@ -26,7 +26,14 @@ session_start();
   <link rel="stylesheet" href="vistas/bower_components/bootstrap/dist/css/bootstrap.min.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="vistas/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="vistas/bower_components/font-awesome/css/font-awesome.min.css"> -->
+  
+  <link rel="stylesheet" href="vistas/bower_components/fontawesome-free-6.2.1-web/css/fontawesome.css">
+  <link rel="stylesheet" href="vistas/bower_components/fontawesome-free-6.2.1-web/css/solid.css">
+  <link rel="stylesheet" href="vistas/bower_components/fontawesome-free-6.2.1-web/css/brands.css">
+  <link rel="stylesheet" href="vistas/bower_components/fontawesome-free-6.2.1-web/css/v5-font-face.css">
+  <link rel="stylesheet" href="vistas/bower_components/fontawesome-free-6.2.1-web/css/all.css">
+
   <!-- Ionicons -->
   <link rel="stylesheet" href="vistas/bower_components/Ionicons/css/ionicons.min.css">
 
@@ -64,6 +71,12 @@ session_start();
   <!-- Bootstrap 3.3.7 -->
   <script src="vistas/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+  <!-- Fontawesome -->
+  <script defer src="vistas/bower_components/fontawesome-free-6.2.1-web/js/solid.js"></script>
+  <script defer src="vistas/bower_components/fontawesome-free-6.2.1-web/js/brands.js"></script>
+  <script defer src="vistas/bower_components/fontawesome-free-6.2.1-web/js/fontawesome.js"></script>
+  <script defer src="vistas/bower_components/fontawesome-free-6.2.1-web/js/all.js"></script>
+  
   <!-- FastClick -->
   <script src="vistas/bower_components/fastclick/lib/fastclick.js"></script>
   
