@@ -27,8 +27,23 @@ if($_SESSION["perfil"] == "Vendedor"){
         ?>
          <button class="btn btn-success" style="margin-top:1px">Descargar reporte en Excel</button>
         <?php echo '</a>';?>
+      <!--=====================================
+      SELECCIONAR DEPOSITO
+      ======================================-->
+      <div class="col-md-12" position=relative>
+          <div class="input-group">
+            <label for="cmbdeposito">Depósito</label>
+            <select class="form-control" id="cmbdeposito" name="cmbdeposito" required>
+                <?php
+                  $depositos = ControladorCompras::ctrListarDepositos();
+                  foreach ($depositos as $key => $value) {
+                    echo '<option value="'.$value["id"].'">'.$value["deposito"].'</option>';
+                  }
+                ?>
+            </select>
+          </div>
+        </div>
       </div>
-
       <div class="box-body">  
         <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
           <thead>
