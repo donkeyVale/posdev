@@ -6,10 +6,10 @@
     return;
   }
 
-  $xml = ControladorVentas::ctrDescargarXML();
+  $xml = ControladorCompras::ctrDescargarXML();
   if($xml){
     rename($_GET["xml"].".xml", "xml/".$_GET["xml"].".xml");
-    echo '<a class="btn btn-block btn-success abrirXML" archivo="xml/'.$_GET["xml"].'.xml" href="ventas">Se ha creado correctamente el archivo XML <span class="fa fa-times pull-right"></span></a>';
+    echo '<a class="btn btn-block btn-success abrirXML" archivo="xml/'.$_GET["xml"].'.xml" href="compras">Se ha creado correctamente el archivo XML <span class="fa fa-times pull-right"></span></a>';
   }
 ?>
 
@@ -27,7 +27,7 @@
         <a href="crear-compra">
           <button class="btn btn-primary">Agregar Compra</button>
         </a>
-        <button type="button" class="btn btn-default pull-right" id="daterange-btn">   
+        <button type="button" class="btn btn-default pull-right" id="daterange-btn3">   
           <span>
             <i class="fa fa-calendar"></i> 
               <?php
@@ -41,9 +41,6 @@
           <i class="fa fa-caret-down"></i>
         </button>
 
-        <?php if($_SESSION["perfil"] == "administrador"){ ?> 
-          <button class="btn btn-primary" data-toggle="modal" data-target="#modalEstablecerCuotas">Establecer Cuotas</button>
-        <?php } ?>
       </div>
       <div class="box-body">
         <table class="table table-bordered table-striped dt-responsive tablas" width="100%"> 
@@ -80,13 +77,13 @@
                   <td>'.$value["fecha"].'</td>
                   <td>
                     <div class="btn-group">
-                      <a class="btn btn-success" href="index.php?ruta=ventas&xml='.$value["id"].'">xml</a>
-                      <button class="btn btn-info btnImprimirFacturaCompra" codigoVenta="'.$value["id"].'">
+                      <a class="btn btn-success" href="index.php?ruta=compras&xml='.$value["id"].'">xml</a>
+                      <button class="btn btn-info btnImprimirFacturaCompra" codigoVentaCompra="'.$value["id"].'">
                         <i class="fa fa-print"></i>
                       </button>
-                      <button class="btn btn-warning btnVerCompra" idVenta="'.$value["id"].'"><i class="fa fa-search"></i></button>';
+                      <button class="btn btn-warning btnVerCompra" idCompra="'.$value["id"].'"><i class="fa fa-search"></i></button>';
                       if($_SESSION["perfil"] == "Administrador"){
-                        echo '<button class="btn btn-danger btnEliminarVenta" idVenta="'.$value["id"].'"><i class="fa fa-times"></i></button>';
+                        echo '<button class="btn btn-danger btnEliminarCompra" idCompra="'.$value["id"].'"><i class="fa fa-times"></i></button>';
                       }
                 echo '</div>  
                   </td>
@@ -96,53 +93,10 @@
           </tbody>
         </table>
        <?php
-          $eliminarVenta = new ControladorVentas();
-          $eliminarVenta -> ctrEliminarVenta();
+          $eliminarCompra = new ControladorCompras();
+          $eliminarCompra -> ctrEliminarCompra();
         ?>       
       </div>
     </div>
   </section>
-</div>
-
-<!--=====================================
-MODAL ESTABLECER CUOTAS
-======================================-->
-<div id="modalEstablecerCuotas" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form role="form" method="post" enctype="form-data">
-        <!--=====================================
-        CABEZA DEL MODAL
-        ======================================-->
-        <div class="modal-header" style="background:#3c8dbc; color:white">
-          <h4 class="modal-title">Establecer Cuotas</h4>
-        </div>
-        <!--=====================================
-        CUERPO DEL MODAL
-        ======================================-->
-        <div class="modal-body">
-          <div class="box-body">
-            <!-- ENTRADA PARA LA NUEVA CANTIDAD DE CUOTAS--> 
-            <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-                <input type="number" min="0" class="form-control input-lg" name="nuevoCuota" id="nuevoCuota" placeholder="Ingresar Cuota Maxima" required>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--=====================================
-        PIE DEL MODAL
-        ======================================-->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-          <button type="submit" class="btn btn-primary">Guardar Nueva Cuota</button>
-        </div>
-        <?php
-          $crearCuotas = new ControladorVentas();
-          $crearCuotas -> ctrEstablecerCuotas();
-        ?>
-      </form>
-    </div>
-  </div>
 </div>
