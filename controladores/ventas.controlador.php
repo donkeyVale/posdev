@@ -50,7 +50,7 @@ class ControladorVentas{
 			$datos = array("id_vendedor"=>$_POST["idVendedor"],
 						   "id_cliente"=>$_POST["seleccionarCliente"],
 						   "codigo"=>$_POST["nuevaVenta"],
-						   "productos"=>$_POST["listaProductos"],
+						   "productos"=>$_POST["listaProductosVenta"],
 						   "impuesto"=>$_POST["nuevoPrecioImpuesto"],
 						   "neto"=>$_POST["nuevoPrecioNeto"],
 						   "total"=>$_POST["totalVenta"],
@@ -66,7 +66,7 @@ class ControladorVentas{
 			$codigo= ModeloVentas::obtenerUltimaVentaUsuario($usuario);
 			$codigoVenta = $codigo[0][0];
 
-			$listaProductos = json_decode($_POST["listaProductos"], true);
+			$listaProductos = json_decode($_POST["listaProductosVenta"], true);
 			$totalProductosComprados = array();
 			foreach ($listaProductos as $key => $value) {
 			   	array_push($totalProductosComprados, $value["cantidad"]);
@@ -80,7 +80,10 @@ class ControladorVentas{
 			    //$nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
 				$item1b = "stock";
 				$valor1b = $value["stock"];
-				$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
+				$idDeposito = $value["iddeposito"];
+
+				//$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
+				ModeloProductos::mdlActualizarProductoDepositoVenta($valor, $idDeposito , $value["cantidad"]);
 
 				/*Se inserta detalle de ventas */
 				$tabla = "detalle_ventas";
@@ -89,7 +92,8 @@ class ControladorVentas{
 							"cantidad"=>$value["cantidad"],
 							"precio_unitario"=>$value["precio"],
 							"total"=>$value["total"],
-							"id_vendedor"=>$usuario);
+							"id_vendedor"=>$usuario,
+							"id_deposito"=>$value["iddeposito"]);
 				$respuesta2 = ModeloVentas::mdlIngresarDetalleVenta($tabla, $datos);
 			}
 			$tablaClientes = "clientes";
