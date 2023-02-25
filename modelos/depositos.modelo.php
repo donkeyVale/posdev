@@ -83,4 +83,45 @@ class ModeloDepositos{
 		$stmt -> close();
 		$stmt = null;
 	}
-}
+
+	static public function mdlIngresarUsuariosDepositos($tabla, $datos){
+
+        $listaDepositos = json_decode($datos["depositos"], true);
+
+		$sm = Conexion::conectar()->prepare("delete from usuario_depositos where idUsuario=". $datos["id_usuario"]. "");
+		$sm->execute();
+        foreach ($listaDepositos as $key => $value) {
+            $valor = $value['id'];
+
+			$st = Conexion::conectar()->prepare("select count(*) from usuario_depositos where idUsuario=".$datos["id_usuario"]." and idDeposito=".$valor ." ");
+			$st -> execute();
+			$rpta = $st -> fetchAll();
+			//$st -> close();
+			$st = null;
+			$existe = $rpta[0][0];
+			if($existe=="0")
+			{
+				$stmt = Conexion::conectar()->prepare("INSERT INTO usuario_depositos(idUsuario,idDeposito,usuariocreacion) VALUES (:idUsuario, :idDeposito, :usuariocreacion)");
+				$stmt->bindParam(":idUsuario", $datos["id_usuario"], PDO::PARAM_INT);
+				$stmt->bindParam(":idDeposito",$valor, PDO::PARAM_INT);
+				$stmt->bindParam(":usuariocreacion", $datos["usuarioCreacion"], PDO::PARAM_STR);
+				$stmt->execute();
+			}
+        }
+		return "ok";
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/* Se agrega método para listar los depósitos del usuario */
+	static public function mdlListarDepositosUsuario($valor){
+		$stmt = Conexion::conectar()->prepare("SELECT p.idDeposito, c.deposito
+            FROM usuario_depositos p 
+            inner join depositos c on c.id=p.idDeposito 
+			where p.idUsuario =" . $valor . " order by c.deposito asc");
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+} 
