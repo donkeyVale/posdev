@@ -23,14 +23,15 @@ class ModeloCompras{
 		$stmt = null;
 	}
 
-	static public function mdlMostrarCabeceraCompras($idVenta){
-		if($idVenta != null){
-			$stmt = Conexion::conectar()->prepare("SELECT v.id,v.neto,v.total,v.productos,v.nrofactura, v.id_proveedor,u.nombre as vendedor,c.nombre as cliente,v.id_tipo_compra,fp.nombre as nombrePago 
-    FROM compras v 
-    inner join usuarios u on u.id=v.usuariocreacion 
-    inner join proveedores c on c.id=v.id_proveedor 
-    inner join tipo_compra fp on fp.id=v.id_tipo_compra where v.id= :valor");
-			$stmt -> bindParam(":valor", $idVenta, PDO::PARAM_STR);
+	static public function mdlMostrarCabeceraCompras($idCompra){
+		if($idCompra != null){
+			$stmt = Conexion::conectar()->prepare("SELECT v.id,v.neto,v.total,v.productos,v.nrofactura, v.id_proveedor,u.nombre as comprador,c.nombre as proveedor,v.id_tipo_compra,fp.nombre as nombrePago ,
+					v.fechacompra,v.usuariocreacion, v.referencia, v.id_deposito, d.deposito FROM compras v 
+					inner join usuarios u on u.id=v.usuariocreacion 
+					inner join proveedores c on c.id=v.id_proveedor 
+					left join pospruebas_db.depositos d on d.id=v.id_deposito
+					inner join tipo_compra fp on fp.id=v.id_tipo_compra where v.id= :valor");
+			$stmt -> bindParam(":valor", $idCompra, PDO::PARAM_STR);
 			$stmt -> execute();
 			return $stmt -> fetch();
 		}else{
@@ -129,9 +130,11 @@ luisb@cybitsoft.com.co
 	}
 
 	/*=============================================
-	ELIMINAR VENTA
+	ELIMINAR COMPRA
 	=============================================*/
-	static public function mdlEliminarVenta($tabla, $datos){
+	static public function mdlEliminarCompra($tabla, $datos){
+		$stm_detalle=Conexion::conectar()->prepare("DELETE FROM detalle_compras WHERE id_compra = ". $datos . "");
+		$stm_detalle -> execute();
 		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 		if($stmt -> execute()){
@@ -194,6 +197,7 @@ luisb@cybitsoft.com.co
 			if($fechaFinalMasUno == $fechaActualMasUno){
 				$stmt = Conexion::conectar()->prepare("select c.id,  p.nombre as proveedor,DATE_FORMAT(c.fechacompra, '%d/%m/%Y')  as fecha , d.deposito,c.nrofactura,c.total,tc.nombre as tipocompra, CONCAT('C-',LPAD(c.id,8,'0')) AS codigo from compras c inner join proveedores p on p.id=c.id_proveedor inner join depositos d on d.id=c.id_deposito inner join tipo_compra tc on tc.id=c.id_tipo_compra  where c.fechacompra between '".$fechaInicial."' and '".$fechaFinalMasUno."' order by c.id asc");
 			}else{
+				//$stmt = Conexion::conectar()->prepare("select c.id,  p.nombre as proveedor,". $fechaInicial ." as fecha , d.deposito,c.nrofactura,c.total,tc.nombre as tipocompra, CONCAT('C-',LPAD(c.id,8,'0')) AS codigo from compras c inner join proveedores p on p.id=c.id_proveedor inner join depositos d on d.id=c.id_deposito inner join tipo_compra tc on tc.id=c.id_tipo_compra  order by c.id asc");
 				$stmt = Conexion::conectar()->prepare("select c.id,  p.nombre as proveedor,DATE_FORMAT(c.fechacompra, '%d/%m/%Y')  as fecha , d.deposito,c.nrofactura,c.total,tc.nombre as tipocompra, CONCAT('C-',LPAD(c.id,8,'0')) AS codigo from compras c inner join proveedores p on p.id=c.id_proveedor inner join depositos d on d.id=c.id_deposito inner join tipo_compra tc on tc.id=c.id_tipo_compra  where c.fechacompra between '".$fechaInicial."' and '".$fechaFinal."' order by c.id asc");
 			}
 			$stmt -> execute();
