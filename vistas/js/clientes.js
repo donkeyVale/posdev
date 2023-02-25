@@ -47,3 +47,7 @@ $(".tablas").on("click", ".btnEliminarCliente", function() {
         }
     })
 })
+
+$("#btnmodalAgregarCliente").click(function(e) {
+    $("#nuevoLimite").val(0);
+})
