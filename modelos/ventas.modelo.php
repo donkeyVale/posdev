@@ -90,13 +90,14 @@ where v.id= :valor");
 	}
 	/*INGRESAR DETALLE DE VENTA */
 	static public function mdlIngresarDetalleVenta($tabla, $datos){
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_venta, id_producto, cantidad, precio_unitario, total, id_vendedor) VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :total, :id_vendedor)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_venta, id_producto, cantidad, precio_unitario, total, id_vendedor,id_deposito) VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :total, :id_vendedor, :id_deposito )");
 		$stmt->bindParam(":id_venta", $datos["id_venta"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_producto", $datos["id_producto"], PDO::PARAM_INT);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":precio_unitario", $datos["precio_unitario"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_STR);
+		$stmt->bindParam(":id_deposito", $datos["id_deposito"], PDO::PARAM_INT);
 		$stmt->execute();
 	}
 
@@ -236,8 +237,9 @@ order by v.id asc");
         $Object->setTimezone(new DateTimeZone('America/Asuncion'));
         $fecha = $Object->format("Y-m-d");
         //$stmt = Conexion::conectar()->prepare("SELECT id,monto_caja,status FROM cajas_sucursales WHERE DATE(fecha_creacion)='".$fecha."' and status=1");
-		$stmt = Conexion::conectar()->prepare("select * from aperturas where estado = 1  AND DATE(fechaapertura)='$fecha'");
-//		$stmt -> bindParam(":usuario", $usuario);
+		//$stmt = Conexion::conectar()->prepare("select * from aperturas where estado = 1  AND DATE(fechaapertura)='$fecha'");
+		$stmt = Conexion::conectar()->prepare("select count(*) from aperturas where usuarioapertura=:usuario and estado=1");
+		$stmt -> bindParam(":usuario", $usuario);
         $stmt->execute();
 		return $stmt->fetch();
 		$stmt -> close();
