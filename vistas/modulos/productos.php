@@ -19,7 +19,7 @@ if($_SESSION["perfil"] == "Vendedor"){
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
+        <button class="btn btn-primary" id="btnModalAgregarProducto" name="btnModalAgregarProducto" data-toggle="modal" data-target="#modalAgregarProducto">
           Agregar producto
         </button>
         <?php
@@ -33,11 +33,21 @@ if($_SESSION["perfil"] == "Vendedor"){
       <div class="col-md-12" position=relative>
           <div class="input-group">
             <label for="cmbdeposito">Depósito</label>
-            <select class="form-control" id="cmbdeposito" name="cmbdeposito" required>
+            <select class="form-control" id="cmbdepositoProducto" name="cmbdepositoProducto" required>
                 <?php
+
                   $depositos = ControladorCompras::ctrListarDepositos();
                   foreach ($depositos as $key => $value) {
-                    echo '<option value="'.$value["id"].'">'.$value["deposito"].'</option>';
+                    $condicional="";
+                    if($_GET["cmbdepositoProducto"]==$value["id"])
+                    {
+                      $condicional = "selected";
+                    }
+                    else  
+                    {
+                      $condicional="";
+                    }
+                    echo '<option value="'.$value["id"].'" ' . $condicional . '>'.$value["deposito"].'</option>';
                   }
                 ?>
             </select>
@@ -63,7 +73,13 @@ if($_SESSION["perfil"] == "Vendedor"){
           </thead>
           <tbody>
           <?php
-            $productos = ControladorProductos::ctrListarProductos();
+            if(isset($_GET["cmbdepositoProducto"])){
+              $idDeposito = $_GET["cmbdepositoProducto"];
+            }else{
+              $idDeposito = 1;
+            }
+            $productos = ControladorProductos::ctrListarProductosDepositos($idDeposito);
+            //$productos = ControladorProductos::ctrListarProductos();
             foreach ($productos as $key => $value) {
               echo '<tr>
                       <td>'.($key+1).'</td>
