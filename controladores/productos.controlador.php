@@ -7,6 +7,12 @@ class ControladorProductos{
 		return $respuesta;
 	}
 
+	/* Se agrega el método que permite listar los productos por depósitos */
+	static public function ctrListarProductosDepositos($valor){
+		$respuesta = ModeloProductos::mdlListarProductosDepositos($valor);
+		return $respuesta;
+	}
+
     static public function ctrListarProductosHijos(){
         $respuesta = ModeloProductos::mdlListarProductosHijos();
         return $respuesta;
@@ -18,6 +24,12 @@ class ControladorProductos{
 	static public function ctrMostrarProductos($item, $valor){
 		$tabla = "productos";
 		$respuesta = ModeloProductos::mdlMostrarProductos($tabla, $item, $valor);
+		return $respuesta;
+	}
+
+	static public function ctrMostrarProductosDepositos($item, $valor, $deposito, $usuario){
+		$tabla = "productos";
+		$respuesta = ModeloProductos::mdlMostrarProductosDepositos($tabla, $item, $valor,$deposito,$usuario);
 		return $respuesta;
 	}
 
@@ -91,6 +103,14 @@ class ControladorProductos{
 						imagepng($destino, $ruta);
 					}
 				}
+				if($_POST["nuevaFechaVencimiento"]==null)
+				{
+					$fechaVencimiento = null;
+				}
+				else
+				{
+					$fechaVencimiento = $_POST["nuevaFechaVencimiento"];
+				}
 				$tabla = "productos";
 				$datos = array("descripcion" => $_POST["nuevaDescripcion"],
 							   "codigo" => $_POST["nuevoCodigo"],
@@ -102,7 +122,7 @@ class ControladorProductos{
 							   "product_id" => isset($_POST["product_id"]) ? $_POST["product_id"] : null,
 							   "hijo" => isset($_POST["product_id"]) ? 1 : 0,
 							   "stock" => 0,
-							   "fecha_vencimiento" => $_POST["nuevaFechaVencimiento"],
+							   "fecha_vencimiento" => $fechaVencimiento,
 							   "id_tipo_producto" => $_POST["nuevoTipoProducto"],
 							   "id_impuesto" => $_POST["nuevoImpuesto"],
 							   "cantidad_alerta" => $_POST["nuevaCantidadAlerta"],
@@ -245,8 +265,9 @@ class ControladorProductos{
 	=============================================*/
 	static public function ctrEditarProducto(){
 		if(isset($_POST["editarDescripcion"])){
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\/\.\-\_\, ]+$/', $_POST["editarDescripcion"]) &&
-				preg_match('/^[0-9]+$/', $_POST["editarCantidadAlerta"]) &&	
+			//if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\/\.\-\_\, ]+$/', $_POST["editarDescripcion"]) &&
+			 if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\/\.\-\_\, ]+$/', $_POST["editarDescripcion"]) &&
+			    preg_match('/^[0-9]+$/', $_POST["editarCantidadAlerta"]) &&	
 				preg_match('/^[0-9]+(\.[0-9]{1,2})?$/', $_POST["editarPrecioCompra"]) &&
 				preg_match('/^[0-9]+(\.[0-9]{1,2})?$/', $_POST["editarPrecioVenta"])){
 		   		/*=============================================
