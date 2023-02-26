@@ -25,9 +25,12 @@ class AjaxProductos{
   EDITAR PRODUCTO
   =============================================*/ 
   public $idProducto;
+  public $idDeposito;
+  public $idUsuario;
   public $idProductoHijo;
   public $traerProductos;
   public $nombreProducto;
+  
   public function ajaxEditarProducto(){
 		if ($this->idProductoHijo == null){
             $item = "id";
@@ -37,6 +40,29 @@ class AjaxProductos{
             $item = "id";
             $valor = $this->idProducto;
             $productoPadre = ControladorProductos::ctrMostrarProductos($item, $valor);
+
+            $valorPadre = $this->idProductoHijo;
+            $productoHijo = $this->ajaxProductoPadre($valorPadre);
+            $productoHijo['stock'] = $productoPadre['stock'];
+            $respuesta = $productoHijo;
+        }
+
+		echo json_encode($respuesta);
+  }
+
+  public function ajaxEditarProductoDeposito(){
+		if ($this->idProductoHijo == null){
+            $item = "id";
+            $valor = $this->idProducto;
+            $deposito = $this->idDeposito;
+            $usuario = $this->idUsuario;
+            $respuesta = ControladorProductos::ctrMostrarProductosDepositos($item, $valor,$deposito,$usuario);
+        } else {
+            $item = "id";
+            $valor = $this->idProducto;
+            $deposito = $this->idDeposito;
+            $usuario = $this->idUsuario;
+            $productoPadre = ControladorProductos::ctrMostrarProductosDepositos($item, $valor,$deposito,$usuario);
 
             $valorPadre = $this->idProductoHijo;
             $productoHijo = $this->ajaxProductoPadre($valorPadre);
@@ -80,8 +106,17 @@ if(isset($_POST["idProducto"])){
       $editarProducto->idProducto =  $producto['product_id'];
       $editarProducto->idProductoHijo = $producto['id'];
   }
-
+  
+  if(isset($_POST["idDeposito"]))
+  {
+    $editarProducto->idDeposito = $_POST["idDeposito"];
+    $editarProducto->idUsuario = $_POST["idUsuario"];
+    $editarProducto -> ajaxEditarProductoDeposito();
+  }
+  else
+  {  
     $editarProducto -> ajaxEditarProducto();
+  }
 }
 /*=============================================
 TRAER PRODUCTO

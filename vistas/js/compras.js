@@ -412,10 +412,10 @@ $(".tablas").on("click", ".btnEditarVenta", function() {
     window.location = "index.php?ruta=editar-venta&idVenta=" + idVenta;
 })
 
-/*BOTÓN PARA VER VENTA*/
+/*BOTÓN PARA VER COMPRA*/
 $(".tablas").on("click", ".btnVerCompra", function() {
-    var idVenta = $(this).attr("idVenta");
-    window.location = "index.php?ruta=ver-compra&idVenta=" + idVenta;
+    var idCompra = $(this).attr("idCompra");
+    window.location = "index.php?ruta=ver-compra&idCompra=" + idCompra;
 })
 
 /*=============================================
@@ -448,22 +448,22 @@ $('.tablaCompras').on('draw.dt', function() {
 })
 
 /*=============================================
-BORRAR VENTA
+BORRAR COMPRA
 =============================================*/
-$(".tablas").on("click", ".btnEliminarVenta", function() {
-    var idVenta = $(this).attr("idVenta");
+$(".tablas").on("click", ".btnEliminarCompra", function() {
+    var idCompra = $(this).attr("idCompra");
     swal({
-        title: '¿Está seguro de borrar la venta?',
+        title: '¿Está seguro de borrar la compra?',
         text: "¡Si no lo está puede cancelar la accíón!",
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si, borrar venta!'
+        confirmButtonText: 'Si, borrar compra!'
     }).then(function(result) {
         if (result.value) {
-            window.location = "index.php?ruta=ventas&idVenta=" + idVenta;
+            window.location = "index.php?ruta=compras&idCompra=" + idCompra;
         }
     })
 })
@@ -553,3 +553,25 @@ $('.tablaCompras').DataTable({
         }
     }
 });
+
+$('#daterange-btn3').daterangepicker({
+        ranges: {
+            'Hoy': [moment(), moment()],
+            'Ayer': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Últimos 7 días': [moment().subtract(6, 'days'), moment()],
+            'Últimos 30 días': [moment().subtract(29, 'days'), moment()],
+            'Este mes': [moment().startOf('month'), moment().endOf('month')],
+            'Último mes': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment(),
+        endDate: moment()
+    },
+    function(start, end) {
+        $('#daterange-btn3 span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        var fechaInicial = start.format('YYYY-MM-DD');
+        var fechaFinal = end.format('YYYY-MM-DD');
+        var capturarRango = $("#daterange-btn3 span").html();
+        localStorage.setItem("capturarRango", capturarRango);
+        window.location = "index.php?ruta=compras&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal;
+    }
+)

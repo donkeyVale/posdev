@@ -14,7 +14,7 @@ CARGAR LA TABLA DINÁMICA DE VENTAS
 // })// 
 
 $('.tablaVentas').DataTable({
-    "ajax": "ajax/datatable-ventas.ajax.php",
+    //"ajax": "ajax/datatable-ventas.ajax.php",
     "deferRender": true,
     "retrieve": true,
     "processing": true,
@@ -53,10 +53,14 @@ AGREGANDO PRODUCTOS A LA VENTA DESDE LA TABLA
 
 $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
     var idProducto = $(this).attr("idProducto");
+    var idDeposito = $(this).attr("idDeposito");
+    var idUsuario = $("#idVendedor").val();
     $(this).removeClass("btn-primary agregarProducto");
     $(this).addClass("btn-default");
     var datos = new FormData();
     datos.append("idProducto", idProducto);
+    datos.append("idDeposito", idDeposito);
+    datos.append("idUsuario", idUsuario);
     $.ajax({
         url: "ajax/productos.ajax.php",
         method: "POST",
@@ -69,6 +73,16 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
             var descripcion = respuesta["descripcion"];
             var stock = respuesta["stock"];
             var precio = respuesta["precio_venta"];
+            var permiso = respuesta["permiso"];
+            if (permiso == 0) {
+                swal({
+                    title: "El usuario no tiene permiso al depósito",
+                    type: "error",
+                    confirmButtonText: "¡Cerrar!"
+                });
+                $("button[idProducto='" + idProducto + "']").addClass("btn-primary agregarProducto");
+                return;
+            }
             /*=============================================
             EVITAR AGREGAR PRODUTO CUANDO EL STOCK ESTÁ EN CERO
             =============================================*/
@@ -87,7 +101,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
                     '<div class="col-xs-5" style="padding-right:0px">' +
                     '<div class="input-group">' +
                     '<span class="input-group-addon"><button type="button" class="btn btn-danger btn-xs quitarProducto" idProducto="' + idProducto + '"><i class="fa fa-times"></i></button></span>' +
-                    '<input type="text" class="form-control nuevaDescripcionProducto" idProducto="' + idProducto + '" name="agregarProducto" value="' + descripcion + '" readonly required>' +
+                    '<input type="text" class="form-control nuevaDescripcionProducto" idProducto="' + idProducto + '" idDeposito="' + idDeposito + '" name="agregarProducto" value="' + descripcion + '" readonly required>' +
                     '</div>' +
                     '</div>' +
                     '<!-- Precio del producto -->' +
@@ -123,7 +137,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
                 // AGREGAR IMPUESTO
             agregarImpuesto()
                 // AGRUPAR PRODUCTOS EN FORMATO JSON
-            listarProductos()
+            listarProductosVentas()
                 // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
                 //$(".nuevoPrecioProducto").number(true, 2);
             $(".subTotalPrecioProducto").number(true, 2);
@@ -178,7 +192,7 @@ $(".formularioVenta").on("click", "button.quitarProducto", function() {
             // AGREGAR IMPUESTO
         agregarImpuesto()
             // AGRUPAR PRODUCTOS EN FORMATO JSON
-        listarProductos()
+        listarProductosVentas()
     }
 })
 
@@ -280,7 +294,7 @@ $(".formularioVenta").on("change", "select.nuevaDescripcionProducto", function()
             $(nuevoPrecioProducto).val(respuesta["precio_venta"]);
             $(nuevoPrecioProducto).attr("precioReal", respuesta["precio_venta"]);
             // AGRUPAR PRODUCTOS EN FORMATO JSON
-            listarProductos()
+            listarProductosVentas()
         }
     })
 })
@@ -319,7 +333,7 @@ $(".formularioVenta").on("change", "input.nuevaCantidadProducto", function() {
         // AGREGAR IMPUESTO
     agregarImpuesto()
         // AGRUPAR PRODUCTOS EN FORMATO JSON
-    listarProductos()
+    listarProductosVentas()
 })
 
 $(".formularioVenta").on("change", "input.nuevoDescuento", function() {
@@ -338,7 +352,7 @@ $(".formularioVenta").on("change", "input.nuevoDescuento", function() {
         // AGREGAR IMPUESTO
     agregarImpuesto()
         // AGRUPAR PRODUCTOS EN FORMATO JSON
-    listarProductos()
+    listarProductosVentas()
 })
 
 $(".formularioVenta").on("change", "input.montoDescuento", function() {
@@ -354,7 +368,7 @@ $(".formularioVenta").on("change", "input.montoDescuento", function() {
         // AGREGAR IMPUESTO
     agregarImpuesto()
         // AGRUPAR PRODUCTOS EN FORMATO JSON
-    listarProductos()
+    listarProductosVentas()
 })
 
 /*=============================================
@@ -500,25 +514,26 @@ $(".formularioVenta").on("change", "input#nuevoCodigoTransaccion", function() {
 /*=============================================
 LISTAR TODOS LOS PRODUCTOS
 =============================================*/
-function listarProductos() {
-    var listaProductos = [];
+function listarProductosVentas() {
+    var listaProductosVenta = [];
     var descripcion = $(".nuevaDescripcionProducto");
     var cantidad = $(".nuevaCantidadProducto");
     var precio = $(".nuevoPrecioProducto");
     var descuento = $(".nuevoDescuento");
     var montoDescuento = $(".montoDescuento");
     for (var i = 0; i < descripcion.length; i++) {
-        listaProductos.push({
+        listaProductosVenta.push({
             "id": $(descripcion[i]).attr("idProducto"),
             "descripcion": $(descripcion[i]).val(),
             "cantidad": $(cantidad[i]).val(),
             "stock": $(cantidad[i]).attr("nuevoStock"),
             //  "descuento" : $(cantidad[i]).attr("descuento"),
             "precio": $(precio[i]).attr("precioReal"),
-            "total": $(precio[i]).val()
-        })
+            "total": $(precio[i]).val(),
+            "iddeposito": $(descripcion[i]).attr("idDeposito")
+        });
     }
-    $("#listaProductos").val(JSON.stringify(listaProductos));
+    $("#listaProductosVenta").val(JSON.stringify(listaProductosVenta));
 }
 
 /*=============================================
@@ -536,13 +551,13 @@ function listarMetodos() {
 /*=============================================
 BOTON EDITAR VENTA
 =============================================*/
-$(".tablas").on("click", ".btnEditarVenta", function() {
+$(".tablaVentas").on("click", ".btnEditarVenta", function() {
     var idVenta = $(this).attr("idVenta");
     window.location = "index.php?ruta=editar-venta&idVenta=" + idVenta;
 })
 
 /*BOTÓN PARA VER VENTA*/
-$(".tablas").on("click", ".btnVerVenta", function() {
+$(".tablaVentas").on("click", ".btnVerVenta", function() {
     var idVenta = $(this).attr("idVenta");
     window.location = "index.php?ruta=ver-venta&idVenta=" + idVenta;
 })
@@ -701,7 +716,7 @@ $("#btnGuardar").click(function(e) {
                 confirmButtonText: "Cerrar"
             }).then(function(result) {});
         } else {
-            $valor = $("#listaProductos").val()
+            $valor = $("#listaProductosVentas").val()
             if ($valor == "") {
                 e.preventDefault();
                 swal({
@@ -714,3 +729,8 @@ $("#btnGuardar").click(function(e) {
         }
     }
 })
+
+$("#cmbdepositoVenta").on('change', function() {
+    var idDeposito = $(this).val();
+    window.location = "index.php?ruta=crear-venta&cmbdepositoVenta=" + idDeposito;
+});
