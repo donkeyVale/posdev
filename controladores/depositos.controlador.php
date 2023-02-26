@@ -132,4 +132,62 @@ class ControladorDepositos{
 			}
 		}
 	}
+
+	/*=============================================
+	CREAR ASIGNACION DEPOSITOS A USUARIO
+	=============================================*/
+	static public function ctrAsignarDepositosUsuario(){
+		
+		if(isset($_POST["nuevaAsignacion"])){
+			
+			/*=============================================
+			ACTUALIZAR LAS COMPRAS
+			=============================================*/
+			if($_POST["listaDepositos"] == ""){
+					echo'<script>
+				swal({
+					  type: "error",
+					  title: "Deben existir depósitos para asignar al usuario",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+								window.location = "asignar-depositos-usuario";
+								}
+							})
+				</script>';
+				return;
+			}
+			/*=============================================
+			GUARDAR LA ASIGNACION
+			=============================================*/				
+			$tabla = "usuario_depositos";
+			$datos = array("id_usuario"=>$_POST["seleccionarUsuario"],
+						   "depositos"=>$_POST["listaDepositos"],
+						   "usuarioCreacion"=>$_SESSION["id"]);
+			$respuesta = ModeloDepositos::mdlIngresarUsuariosDepositos($tabla, $datos);
+			/*************************************************** */
+			
+			if($respuesta == "ok"){
+				echo'<script>
+				localStorage.removeItem("rango");
+				swal({
+					  type: "success",
+					  title: "La asignación se realizó de manera correcta.",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar"
+					  }).then(function(result){
+								if (result.value) {
+								window.location = "asignar-depositos-usuario";
+								}
+							})
+				</script>';
+			}
+		}
+	}
+
+	static public function ctrListarDepositosUsuarios($valor){
+		$respuesta = ModeloDepositos::mdlListarDepositosUsuario($valor);
+		return $respuesta;
+	}
 }

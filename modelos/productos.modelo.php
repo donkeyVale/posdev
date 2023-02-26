@@ -17,6 +17,20 @@ class ModeloProductos{
 		$stmt = null;
 	}
 
+	/* Se agrega método para listar los productos del depósito */
+	static public function mdlListarProductosDepositos($valor){
+		$stmt = Conexion::conectar()->prepare("SELECT p.id,p.imagen,p.codigo,p.descripcion, c.categoria, p.precio_compra,p.precio_venta,pd.stock,u.unidad,tp.nombre 
+            FROM productos p 
+            left join categorias c on c.id=p.id_categoria 
+            left join unidades u on u.id=p.id_unidad 
+            left join tipo_producto tp on tp.id=p.tipo_producto  
+			inner join stock_producto pd on pd.id_producto=p.id and pd.id_deposito=" . $valor . " where p.estado=1 and p.hijo = 0 order by p.descripcion asc");
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 
     static public function mdlListarProductosHijos(){
         $stmt = Conexion::conectar()->prepare("SELECT p.id,p.imagen,p.codigo,p.descripcion, c.categoria, p.precio_compra,p.precio_venta,p.stock,u.unidad,tp.nombre 
@@ -49,6 +63,27 @@ class ModeloProductos{
 		$stmt -> close();
 		$stmt = null;
 	}
+
+	/*Productos en Depósitos*/ 
+	static public function mdlMostrarProductosDepositos($tabla, $item, $valor,$deposito,$usuario){
+		//if($item != null){
+			$stmt = Conexion::conectar()->prepare("SELECT p.id,p.descripcion, pd.stock, p.precio_venta,(select count(*) from usuario_depositos where idUsuario=".$usuario." and idDeposito=".$deposito.") as permiso 
+						FROM productos p
+						inner join stock_producto pd on pd.id_producto=p.id and pd.id_deposito=".$deposito." where p.id=".$valor."");
+			//$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
+			//$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+			return $stmt -> fetch();
+		/*}else{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla  where estado!=2 and product_id IS NULL ORDER BY 1 DESC");
+			$stmt -> execute();
+			return $stmt -> fetchAll();
+		}*/
+		$stmt -> close();
+		$stmt = null;
+	}
+
 
     static public function mdlMostrarProductosVentas($tabla, $item, $valor){
         if($item != null){
@@ -94,24 +129,48 @@ class ModeloProductos{
 	REGISTRO DE PRODUCTO
 	=============================================*/
 	static public function mdlIngresarProducto($tabla, $datos){
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, imagen, stock,product_id, hijo, precio_compra, precio_venta, tipo_producto, usuariocreacion, id_marca, id_unidad, fecha_vencimiento, stock_minimo_alerta, tipo_impuesto, tipo_control) VALUES (:id_categoria, :codigo, :descripcion, :imagen, :stock, :product_id, :hijo, :precio_compra, :precio_venta, :tipo_producto, :usuariocreacion, :id_marca, :id_unidad, :fecha_vencimiento, :stock_minimo_alerta, :tipo_impuesto, :tipo_control)");
-		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
-		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
-		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
-		$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
-		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
-		$stmt->bindParam(":product_id", $datos["product_id"], PDO::PARAM_STR);
-		$stmt->bindParam(":hijo", $datos["hijo"], PDO::PARAM_STR);
-		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
-		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo_producto", $datos["id_tipo_producto"], PDO::PARAM_STR);
-		$stmt->bindParam(":usuariocreacion", $datos["usuario"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_marca", $datos["id_marca"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_unidad", $datos["id_unidad"], PDO::PARAM_STR);
-		$stmt->bindParam(":fecha_vencimiento", $datos["fecha_vencimiento"], PDO::PARAM_STR);
-		$stmt->bindParam(":stock_minimo_alerta", $datos["cantidad_alerta"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo_impuesto", $datos["id_impuesto"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo_control", $datos["stock_critico"], PDO::PARAM_STR);
+		if($datos["fecha_vencimiento"]==null)
+		{
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, imagen, stock,product_id, hijo, precio_compra, precio_venta, tipo_producto, usuariocreacion, id_marca, id_unidad, stock_minimo_alerta, tipo_impuesto, tipo_control) VALUES (:id_categoria, :codigo, :descripcion, :imagen, :stock, :product_id, :hijo, :precio_compra, :precio_venta, :tipo_producto, :usuariocreacion, :id_marca, :id_unidad, :stock_minimo_alerta, :tipo_impuesto, :tipo_control)");
+			$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
+			$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+			$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+			$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
+			$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
+			$stmt->bindParam(":product_id", $datos["product_id"], PDO::PARAM_STR);
+			$stmt->bindParam(":hijo", $datos["hijo"], PDO::PARAM_STR);
+			$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
+			$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_producto", $datos["id_tipo_producto"], PDO::PARAM_STR);
+			$stmt->bindParam(":usuariocreacion", $datos["usuario"], PDO::PARAM_STR);
+			$stmt->bindParam(":id_marca", $datos["id_marca"], PDO::PARAM_STR);
+			$stmt->bindParam(":id_unidad", $datos["id_unidad"], PDO::PARAM_STR);
+			$stmt->bindParam(":stock_minimo_alerta", $datos["cantidad_alerta"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_impuesto", $datos["id_impuesto"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_control", $datos["stock_critico"], PDO::PARAM_STR);
+		}
+		else
+		{
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_categoria, codigo, descripcion, imagen, stock,product_id, hijo, precio_compra, precio_venta, tipo_producto, usuariocreacion, id_marca, id_unidad, fecha_vencimiento, stock_minimo_alerta, tipo_impuesto, tipo_control) VALUES (:id_categoria, :codigo, :descripcion, :imagen, :stock, :product_id, :hijo, :precio_compra, :precio_venta, :tipo_producto, :usuariocreacion, :id_marca, :id_unidad, :fecha_vencimiento, :stock_minimo_alerta, :tipo_impuesto, :tipo_control)");
+			$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
+			$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
+			$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+			$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
+			$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
+			$stmt->bindParam(":product_id", $datos["product_id"], PDO::PARAM_STR);
+			$stmt->bindParam(":hijo", $datos["hijo"], PDO::PARAM_STR);
+			$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
+			$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_producto", $datos["id_tipo_producto"], PDO::PARAM_STR);
+			$stmt->bindParam(":usuariocreacion", $datos["usuario"], PDO::PARAM_STR);
+			$stmt->bindParam(":id_marca", $datos["id_marca"], PDO::PARAM_STR);
+			$stmt->bindParam(":id_unidad", $datos["id_unidad"], PDO::PARAM_STR);
+			$stmt->bindParam(":fecha_vencimiento", $datos["fecha_vencimiento"], PDO::PARAM_STR);
+			$stmt->bindParam(":stock_minimo_alerta", $datos["cantidad_alerta"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_impuesto", $datos["id_impuesto"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo_control", $datos["stock_critico"], PDO::PARAM_STR);
+		}
+		
 		if($stmt->execute()){
 			return "ok";
 		}else{
@@ -213,9 +272,18 @@ class ModeloProductos{
             $stmt -> close();
             $stmt = null;
         }
+	}
 
+	static public function mdlActualizarProductoDepositoVenta($producto, $deposito , $cantidad){
 
-
+		$stmt = Conexion::conectar()->prepare("UPDATE stock_producto SET stock = stock - " . $cantidad . " WHERE id_producto=" . $producto . " and id_deposito=" . $deposito . "");
+		if($stmt -> execute()){
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt -> close();
+		$stmt = null;
 	}
 
     static public function productoPadre($productoHijo){

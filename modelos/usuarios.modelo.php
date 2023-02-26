@@ -52,7 +52,13 @@ class ModeloUsuarios{
 		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
-
+			
+			if($datos["perfil"]=="Administrador")
+			{
+				$sentencia = "insert into usuario_depositos (idDeposito,idUsuario) select d.id, (select u.id from usuarios u where u.usuario='" . $datos["usuario"]."') from depositos d where d.estado=1";
+				$st = Conexion::conectar()->prepare($sentencia);		
+				$st->execute();
+			}
 			return "ok";	
 
 		}else{

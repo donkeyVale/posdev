@@ -9,11 +9,30 @@
 							<span>Inicio</span>
 						</a>
 					</li>
-					<li>
-						<a href="usuarios">
+					
+					<li class="treeview">
+						<a href="#">
 							<i class="fa fa-user"></i>
 							<span>Usuarios</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
 						</a>
+
+						<ul class="treeview-menu">
+							<li>
+								<a href="usuarios">
+									<i class="fa fa-user"></i>
+									<span>Usuarios</span>
+								</a>
+							</li>
+							<li>
+								<a href="asignar-depositos-usuario">
+									<i class="fa fa-user"></i>
+									<span>Usuarios Depósitos</span>
+								</a>
+							</li>
+						</ul>
 					</li>';
 		}
 

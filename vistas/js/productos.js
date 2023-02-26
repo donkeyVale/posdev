@@ -59,12 +59,12 @@ $("#nuevaCategoria").change(function() {
         success: function(respuesta) {
             if (!respuesta) {
                 var nuevoCodigo = idCategoria + "01";
-               $("#nuevoCodigo").val(nuevoCodigo);
+                $("#nuevoCodigo").val(nuevoCodigo);
             } else {
-              var nuevoCodigo = Number(respuesta["codigo"]) + 1;
+                var nuevoCodigo = Number(respuesta["codigo"]) + 1;
                 $("#nuevoCodigo").val(nuevoCodigo);
             }
-      }
+        }
     })
 })
 
@@ -224,6 +224,41 @@ $(".tablas tbody").on("click", "button.btnEliminarProductoHijo", function() {
     }).then(function(result) {
         if (result.value) {
             window.location = "index.php?ruta=crear-producto&idProducto=" + idProducto + "&idProductoPadre=" + ProductoPadreId;
+        }
+    })
+})
+
+$("#cmbdepositoProducto").on('change', function() {
+    var idDeposito = $(this).val();
+    //alert("Depósito: " + idDeposito);
+    window.location = "index.php?ruta=productos&cmbdepositoProducto=" + idDeposito;
+});
+
+$("#btnModalAgregarProducto").click(function(e) {
+    var idCategoria = $("#nuevaCategoria").val();
+
+    $("#nuevoTipoProducto").val(1);
+    $("#nuevoImpuesto").val(2);
+    $("#nuevoStockCritico").val(1);
+
+    var datos = new FormData();
+    datos.append("idCategoria", idCategoria);
+    $.ajax({
+        url: "ajax/productos.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta) {
+            if (!respuesta) {
+                var nuevoCodigo = idCategoria + "01";
+                $("#nuevoCodigo").val(nuevoCodigo);
+            } else {
+                var nuevoCodigo = Number(respuesta["codigo"]) + 1;
+                $("#nuevoCodigo").val(nuevoCodigo);
+            }
         }
     })
 })

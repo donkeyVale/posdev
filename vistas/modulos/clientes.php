@@ -19,7 +19,7 @@ if($_SESSION["perfil"] == "Especial"){
   <section class="content">
     <div class="box">
       <div class="box-header with-border">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarCliente">
+        <button class="btn btn-primary" data-toggle="modal" id="btnmodalAgregarCliente" name="btnmodalAgregarCliente" data-target="#modalAgregarCliente">
           Agregar cliente
         </button>
       </div>
