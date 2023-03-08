@@ -238,7 +238,8 @@ order by v.id asc");
         $fecha = $Object->format("Y-m-d");
         //$stmt = Conexion::conectar()->prepare("SELECT id,monto_caja,status FROM cajas_sucursales WHERE DATE(fecha_creacion)='".$fecha."' and status=1");
 		//$stmt = Conexion::conectar()->prepare("select * from aperturas where estado = 1  AND DATE(fechaapertura)='$fecha'");
-		$stmt = Conexion::conectar()->prepare("select count(*) from aperturas where usuarioapertura=:usuario and estado=1");
+		//$stmt = Conexion::conectar()->prepare("select count(*) as estado from aperturas where usuarioapertura=:usuario and estado=1");
+		$stmt = Conexion::conectar()->prepare("select estado,id from aperturas where usuarioapertura=:usuario and estado=1");
 		$stmt -> bindParam(":usuario", $usuario);
         $stmt->execute();
 		return $stmt->fetch();
@@ -269,6 +270,24 @@ order by v.id asc");
         $Object->setTimezone(new DateTimeZone('America/Asuncion'));
         $fecha = $Object->format("Y-m-d");
 		$stmt=Conexion::conectar()->prepare("SELECT distinct(metodo_pago)as metodo ,sum(total)as total_venta FROM ventas where date(fecha)='".$fecha."' group by metodo_pago;");
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
+	static public function listadoVentasFormaPagoCajaAperturada($idApertura){
+        $Object = new DateTime();
+        $Object->setTimezone(new DateTimeZone('America/Asuncion'));
+        $fecha = $Object->format("Y-m-d");
+		$stmt=Conexion::conectar()->prepare("select f.nombre,sum(total) as total from ventas v inner join forma_pago f on v.metodo_pago=f.codigo where v.codigo=" . $idApertura . " group by f.nombre order by f.nombre;");
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
+	static public function listadoTotalProductosCajaAperturada($idApertura){
+        $Object = new DateTime();
+        $Object->setTimezone(new DateTimeZone('America/Asuncion'));
+        $fecha = $Object->format("Y-m-d");
+		$stmt=Conexion::conectar()->prepare("select p.descripcion, sum(dv.cantidad) as total from detalle_ventas dv inner join productos p on dv.id_producto=p.id inner join ventas v on v.id=dv.id_venta where v.codigo=" . $idApertura ." group by p.descripcion order by p.descripcion;");
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}

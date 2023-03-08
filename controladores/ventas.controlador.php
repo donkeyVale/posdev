@@ -5,6 +5,15 @@ use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+/*require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
+*/
+
 class ControladorVentas{
 
 	/*=============================================
@@ -569,21 +578,367 @@ class ControladorVentas{
 
 	public function crtCerrarCaja(){
 		if(isset($_POST['cierre']) && $_POST['cierre']==1){
+
+			/* Se obtiene los datos de la caja aún aperturada */ 
+			$usuarioApertura = $_SESSION["id"];
+			$respuestaCaja = ModeloAperturas::mdlMostrarAperturaActivaUsuario($usuarioApertura);
+			foreach ($respuestaCaja as $key => $value) {
+				$nombreSucursal = $value["sucursal"];
+				$nombreCaja = $value["cajas"];
+				$nombreUsuarioApertura =  $value["usuario"];
+				$fechaApertura = $value["fechaapertura"];
+				$montoApertura = $value["monto_apertura"];
+			}
+			/* Se cierra la caja */
 			$caja= ModeloVentas::cerrarCaja($_POST['valor_cierre'], $_POST['caja_id']);
 			if($caja=='ok'){
-					echo'<script>
-						localStorage.removeItem("rango");
-						swal({
-							  type: "success",
-							  title: "El cierre de caja se ha realizado",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
-										if (result.value) {
-										window.location = "cierre-cajas";
-										}
-									})
-						</script>';
+
+				$formaPagos = ModeloVentas::listadoVentasFormaPagoCajaAperturada($_POST['caja_id']);
+				$seccionFormaPago = "";
+				$totalVenta = $montoApertura;
+				foreach ($formaPagos as $key3 => $value3) {
+					$seccionFormaPago = $seccionFormaPago . '<tr>
+											<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+												Pago ' . $value3["nombre"] . '
+											</td>
+											<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+												' . $value3["total"] . '
+											</td>
+										</tr>';
+					$totalVenta = $totalVenta + $value3["total"];
+				}
+
+				$listadoProductos = ModeloVentas::listadoTotalProductosCajaAperturada($_POST['caja_id']);
+				$seccionProductos = "";
+				foreach ($listadoProductos as $key4 => $value4) {
+					$seccionProductos = $seccionProductos . '<tr>
+															<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">' . $value4["descripcion"] . '</td>
+															<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">' . $value4["total"] . '</td>
+														</tr>';
+				}
+
+				$notificaciones = ModeloAperturas::mdlMostrarUsuariosNotificacion();
+				foreach ($notificaciones as $key2 => $value2) {
+					
+					$mail = new PHPMailer();
+					$mail->isSMTP();
+					$mail->SMTPAuth = true;
+					// Login
+					$mail->Host = "smtp.gmail.com";
+					$mail->Port = "465";
+					$mail->Username = "enviocorreoworkana@gmail.com";
+					$mail->Password = "ftydwxdbycayzpbt";
+					$mail->setFrom('enviocorreoworkana@gmail.com', 'Sistema Facturación');
+
+					$mail->addAddress($value2["email"], $value2["nombre"]);
+					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+					$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+					
+					date_default_timezone_set('America/Asuncion');
+					$fecha_actual = date("d-m-Y h:i:s A");
+
+					$mail->CharSet = 'UTF-8';
+					$mail->Encoding = 'base64';
+					$mail->isHTML(true);
+					$mail->Subject = 'Cierre de Caja';
+
+					
+
+					$body='<center>
+					<td width="100%" height="100" align="center">
+										
+						<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" object="drag-module-small">
+							<tbody>
+								<tr>
+									<td width="100%" height="50"></td>
+								</tr>
+							</tbody>
+						</table>
+					
+						<table border="0" cellpadding="0" cellspacing="0" align="center" object="drag-module-small">
+							<tbody>
+								<tr>
+									<td width="100%" style="height:auto">
+										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://ci4.googleusercontent.com/proxy/pCJryLl6Ekyzi250cEoRTjFR-8Vg6I4OfKJt2FUh2W5nCLkzF-iOtvuyBufUKNyjzvUK=s0-d-e1-ft#http://appignis.com/img/logo.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" object="drag-module-small">
+							<tbody>
+								<tr>
+									<td width="100%" height="50"></td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" style="border-radius:6px">
+							<tbody>
+								<tr>
+									<td width="100%" style="border-radius:6px" bgcolor="#ffffff">
+										<div>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" style="border-top-right-radius:6px;border-top-left-radius:6px" id="m_3032233882618744908m_4466486075483208078not1ChangeBG" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td width="100%" height="50"></td>
+																	</tr>
+																	<tr>
+																		<td width="100%" height="20" style="font-size:1px;line-height:1px">&nbsp;</td>
+																	</tr>
+																	<tr>
+																		<td width="100%" style="width:329px;height:auto">
+																			<img src="https://ci5.googleusercontent.com/proxy/0dEf3h65rfdfp0Hj5lfEbH7YIOEN-VuD2n0vGNmbLkPEpD7lcgLMruhDrZCwuU7d57LwyGZD1Je4lgw=s0-d-e1-ft#http://appignis.com/img/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
+																		</td>
+																	</tr>
+																	<tr>
+																		<td width="100%" height="50" style="font-size:1px;line-height:1px">&nbsp;</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:center;font-family:Lato,Helvetica,Arial,sans-serif;font-size:20px;line-height:40px;font-weight:400;color:rgb(53,53,53)">
+																			Hola <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $value2["nombre"] . '</span>, 
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td width="100%" height="25" style="font-size:1px;line-height:1px">&nbsp;</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Le notificamos que el usuario <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $nombreUsuarioApertura .'</span>, siendo las <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $fecha_actual . '</span> realizo el cierre de la caja <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $nombreCaja . '</span> del módulo ventas de la sucursal <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $nombreSucursal . '</span> a continuación el detalle del cierre.
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td width="100%" height="15" style="font-size:1px;line-height:1px">&nbsp;</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="1" cellpadding="5" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Apertura
+																		</td>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+																			' . $fechaApertura . '
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Cierre
+																		</td>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+																			' . $fecha_actual .'
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Efectivo de apertura
+																		</td>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+																			' . $montoApertura . '
+																		</td>
+																	</tr>' . $seccionFormaPago .'
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Total Pagos
+																		</td>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+																			' . $totalVenta . '
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Gastos
+																		</td>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+																			0
+																		</td>
+																	</tr>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Total del Cierre
+																		</td>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(214,54,27)">
+																			' . $totalVenta . '
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<br>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="1" cellpadding="5" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<thead>
+																	<tr>
+																		<th valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Producto
+																		</th>
+																		<th valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:12px;line-height:24px;font-weight:400;color:rgb(134,133,133)">
+																			Cantidad
+																		</th>
+																	</tr>
+																</thead>
+																<tbody>' . $seccionProductos . '
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td width="100%" height="15" style="font-size:1px;line-height:1px">&nbsp;</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;font-weight:400;color:rgb(0,212,255)">
+																			<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none;font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(134,133,133)">Saludos.</a>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small">
+												<tbody>
+													<tr>
+														<td width="100%" valign="middle" align="center">
+															<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+																<tbody>
+																	<tr>
+																		<td width="100%" height="30" style="font-size:1px;line-height:1px">&nbsp;</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>	
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff" object="drag-module-small" style="border-bottom-right-radius:6px;border-bottom-left-radius:6px">
+							<tbody>
+								<tr>
+									<td width="100%" valign="middle" align="center">
+										<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
+											<tbody>
+												<tr>
+													<td width="100%" height="50" style="font-size:1px;line-height:1px">&nbsp;</td>
+												</tr>
+											</tbody>
+										</table>							
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+					</center>';
+
+					$mail->Body = $body;
+					//$mail->AltBody = 'El texto como elemento de texto simple';
+					$mail->send();
+				}
+
+				echo'<script>
+					localStorage.removeItem("rango");
+					swal({
+							type: "success",
+							title: "El cierre de caja se ha realizado",
+							showConfirmButton: true,
+							confirmButtonText: "Cerrar"
+							}).then(function(result){
+									if (result.value) {
+									window.location = "cierre-cajas";
+									}
+								})
+					</script>';
 			}
 		}
 	}

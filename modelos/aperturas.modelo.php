@@ -87,6 +87,15 @@ where (a.estado=1 or a.estado=0)
 		$stmt = null;
 	}
 
+	static public function mdlMostrarAperturaActivaUsuario($idUsuario){
+		$stmt = Conexion::conectar()->prepare("select  c.cajas, s.sucursal, u.usuario, a.fechaapertura, a.monto_apertura from aperturas a inner join cajas c on a.idcaja=c.id inner join sucursales s on s.id=c.idSucursal inner join usuarios u on u.id=a.usuarioapertura where a.estado=1 and a.usuarioapertura=" . $idUsuario);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
+
 	static public function mdlEliminarApertura($tabla, $datos){
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado=0, fechaeliminacion=NOW(), usuarioeliminacion=:usuario WHERE id = :id");
 		$stmt -> bindParam(":id", $datos["idApertura"], PDO::PARAM_INT);
@@ -96,6 +105,14 @@ where (a.estado=1 or a.estado=0)
 		}else{
 			return "error";	
 		}
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlMostrarUsuariosNotificacion(){
+		$stmt = Conexion::conectar()->prepare("select  nombre,email from notificacion  where estado=1 ");
+		$stmt -> execute();
+		return $stmt -> fetchAll();
 		$stmt -> close();
 		$stmt = null;
 	}
