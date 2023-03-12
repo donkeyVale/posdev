@@ -594,7 +594,7 @@ $('.tablaVentas').on('draw.dt', function() {
 /*=============================================
 BORRAR VENTA
 =============================================*/
-$(".tablas").on("click", ".btnEliminarVenta", function() {
+$(".tablaVentas").on("click", ".btnEliminarVenta", function() {
     var idVenta = $(this).attr("idVenta");
     swal({
         title: '¿Está seguro de borrar la venta?',
@@ -615,7 +615,7 @@ $(".tablas").on("click", ".btnEliminarVenta", function() {
 /*=============================================
 IMPRIMIR FACTURA
 =============================================*/
-$(".tablas").on("click", ".btnImprimirFactura", function() {
+$(".tablaVentas").on("click", ".btnImprimirFactura", function() {
     var codigoVenta = $(this).attr("codigoVenta");
     window.open("extensiones/tcpdf/pdf/factura.php?codigo=" + codigoVenta, "_blank");
 })
