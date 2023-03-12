@@ -84,6 +84,16 @@ class ModeloProductos{
 		$stmt = null;
 	}
 
+	static public function mdlProductoDeposito($deposito,$producto){
+		$stmt = Conexion::conectar()->prepare("SELECT p.id,p.descripcion, pd.stock, p.precio_venta 
+					FROM productos p
+					inner join stock_producto pd on pd.id_producto=p.id and pd.id_deposito=".$deposito." where p.id=".$producto."");
+		$stmt -> execute();
+		return $stmt -> fetch();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 
     static public function mdlMostrarProductosVentas($tabla, $item, $valor){
         if($item != null){
