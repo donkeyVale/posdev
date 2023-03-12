@@ -284,6 +284,33 @@
 					</li>';
 		}
 
+		if($_SESSION["perfil"] == "Administrador" ){
+			echo 	'<li class="treeview">
+						<a href="#">
+							<i class="fa-solid fa-dolly"></i>
+							<span>Transferencias</span>
+							<span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="transferencias">	
+									<i class="fa-solid fa-check"></i>
+									<span>Listar Transferencias</span>
+								</a>
+							</li>
+							<li>
+								<a href="crear-transferencia">	
+									<i class="fa-solid fa-check"></i>
+									<span>Crear Transferencia</span>
+								</a>
+							</li>
+						</ul>
+					</li>';
+		}
+		
+
 	}
 		?>
 		</ul>
