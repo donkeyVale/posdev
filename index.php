@@ -19,6 +19,7 @@ require_once "controladores/depositos.controlador.php";
 require_once "controladores/colores.controlador.php";
 require_once "controladores/calces.controlador.php";
 require_once "controladores/compras.controlador.php";
+require_once "controladores/transferencias.controlador.php";
 
 require_once "modelos/usuarios.modelo.php";
 require_once "modelos/categorias.modelo.php";
@@ -38,6 +39,7 @@ require_once "modelos/depositos.modelo.php";
 require_once "modelos/colores.modelo.php";
 require_once "modelos/calces.modelo.php";
 require_once "modelos/compras.modelo.php";
+require_once "modelos/transferencias.modelo.php";
 
 require_once "extensiones/vendor/autoload.php";
 
