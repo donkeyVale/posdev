@@ -102,12 +102,6 @@
 									<span>Depósitos</span>
 								</a>
 							</li>
-							<li>
-								<a href="transferencias">	
-									<i class="fa-solid fa-check"></i>
-									<span>Transferencias</span>
-								</a>
-							</li>
 						</ul>
 					</li>';
 		}
