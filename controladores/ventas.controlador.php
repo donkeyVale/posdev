@@ -624,11 +624,11 @@ class ControladorVentas{
 					$mail->isSMTP();
 					$mail->SMTPAuth = true;
 					// Login
-					$mail->Host = "smtp.gmail.com";
+					$mail->Host = "mail.growerdev.com.py";
 					$mail->Port = "465";
-					$mail->Username = "fmva2011@gmail.com";
+					$mail->Username = "noreply@grower.com.py";
 					$mail->Password = "Donkey3673518";
-					$mail->setFrom('fmva2011@gmail.com', 'Sistema Facturación');
+					$mail->setFrom('noreply@growerdev.com', 'Sistema Facturación');
 
 					$mail->addAddress($value2["email"], $value2["nombre"]);
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
