@@ -40,10 +40,33 @@ if($_SESSION["perfil"] == "Especial"){
                     <div class="input-group">
                       <span class="input-group-addon"><i class="fa fa-user"></i></span> 
                       <input type="text" class="form-control" id="nuevoVendedor" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
-                      <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
-                      <input type="hidden" name="nuevaVenta" id="nuevaVenta" value="<?php echo $cajaAperturada; ?>">
+                      <input type="hidden" name="idVendedor" id="idVendedor" value="<?php echo $_SESSION["id"]; ?>">
+                      <input type="hidden" name="nuevaVenta" id="nuevaVenta" value="<?php echo $cajaAperturada[0][0]; ?>">
                     </div>
                   </div> 
+                  
+                  <div class="form-group">
+                    <div class="input-group">
+                        <label for="cmbdepositoVenta">Depósito</label>
+                        <select class="form-control" id="cmbdepositoVenta" name="cmbdepositoVenta" required>
+                            <?php
+                              $depositos = ControladorCompras::ctrListarDepositos();
+                              foreach ($depositos as $key => $value) {
+                                $condicional="";
+                                if($_GET["cmbdepositoVenta"]==$value["id"])
+                                {
+                                  $condicional = "selected";
+                                }
+                                else  
+                                {
+                                  $condicional="";
+                                }
+                                echo '<option value="'.$value["id"].'" ' . $condicional . '>'.$value["deposito"].'</option>';
+                              }
+                            ?>
+                        </select>
+                    </div>
+                  </div>
                   <!--=====================================
                   ENTRADA DEL CLIENTE
                   ======================================--> 
@@ -76,8 +99,9 @@ if($_SESSION["perfil"] == "Especial"){
                     <div class="col-xs-3">SubTotal</div>
                   </div>
                   <div class="form-group row nuevoProducto">
+                    
                   </div>
-                  <input type="hidden" id="listaProductos" name="listaProductos">
+                  <input type="hidden" id="listaProductosVenta" name="listaProductosVenta">
                   <!--=====================================
                   BOTÓN PARA AGREGAR PRODUCTO
                   ======================================-->
@@ -167,13 +191,44 @@ if($_SESSION["perfil"] == "Especial"){
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>
-                    <th>Imagen</th>
+                    <th style="width: 50px">Imagen</th>
                     <th>Código</th>
                     <th>Descripcion</th>
                     <th>Stock</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
+                <tbody>
+                <?php
+                    if(isset($_GET["cmbdepositoVenta"])){
+                      $idDeposito = $_GET["cmbdepositoVenta"];
+                    }else{
+                      $idDeposito = 1;
+                    }
+                    $productos = ControladorProductos::ctrListarProductosDepositos($idDeposito);
+                    foreach ($productos as $key => $value) {
+
+                      if($value["stock"] <= 10){
+                          $stock = "<button class='btn btn-danger'>".$value["stock"]."</button>";
+                      }else if($value["stock"] > 11 && $value["stock"] <= 15){
+                          $stock = "<button class='btn btn-warning'>".$value["stock"]."</button>";
+                      }else{
+                          $stock = "<button class='btn btn-success'>".$value["stock"]."</button>";
+                      }
+                      
+                      $botones =  "<div class='btn-group'><button class='btn btn-primary agregarProducto recuperarBoton' idProducto='".$value["id"]."' idDeposito='".$idDeposito."'>Agregar</button></div>";
+
+                      echo '<tr>
+                              <td>'.($key+1).'</td>
+                              <td><img src="'.$value["imagen"].'" style="width:30px; height:30px;" class="img-circle"></td>
+                              <td>'.$value["codigo"].'</td>
+                              <td>'.$value["descripcion"].'</td>          
+                              <td>'.$stock.'</td>
+                              <td>'.$botones.'</td>
+                            </tr>';
+                      }
+                  ?>
+                </tbody>
               </table>
             </div>
           </div>
