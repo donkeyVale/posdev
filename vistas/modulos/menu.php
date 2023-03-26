@@ -89,8 +89,8 @@
 		if($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Especial"){
 			echo 	'<li class="treeview">
 						<a href="#">
-							<i class="fa fa-recycle"></i>
-							<span>Transferencias</span>
+							<i class="fa-solid fa-warehouse"></i>
+							<span>Depósitos</span>
 							<span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
