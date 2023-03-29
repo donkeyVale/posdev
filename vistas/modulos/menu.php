@@ -159,7 +159,7 @@
 					</li>';
 		}
 
-		if($_SESSION["perfil"] == "Administrador"){
+		if($_SESSION["perfil"] == "Administrador"|| $_SESSION["perfil"] == "Vendedor"){
 			echo   '<li class="treeview">
 						<a href="#">
 							<i class="fa-solid fa-money-bill-1-wave"></i>
