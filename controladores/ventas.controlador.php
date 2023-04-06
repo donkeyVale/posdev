@@ -659,7 +659,7 @@ class ControladorVentas{
 							<tbody>
 								<tr>
 									<td width="100%" style="height:auto">
-										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://ci4.googleusercontent.com/proxy/pCJryLl6Ekyzi250cEoRTjFR-8Vg6I4OfKJt2FUh2W5nCLkzF-iOtvuyBufUKNyjzvUK=s0-d-e1-ft#http://appignis.com/img/logo.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
+										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/imageMail.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
 									</td>
 								</tr>
 							</tbody>
