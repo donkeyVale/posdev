@@ -626,9 +626,9 @@ class ControladorVentas{
 					// Login
 					$mail->Host = "mail.growerdev.com.py";
 					$mail->Port = "465";
-					$mail->Username = "noreply@growerdev.com.py";
+					$mail->Username = "info@growerdev.com.py";
 					$mail->Password = "Donkey3673518";
-					$mail->setFrom('noreply@growerdev.com', 'Sistema Facturación');
+					$mail->setFrom('info@growerdev.com', 'Sistema Facturación');
 
 					$mail->addAddress($value2["email"], $value2["nombre"]);
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;

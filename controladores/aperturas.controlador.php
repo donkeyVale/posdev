@@ -102,9 +102,9 @@ class ControladorAperturas{
 								// Login
 								$mail->Host = "mail.growerdev.com.py";
 								$mail->Port = "465";
-								$mail->Username = "noreply@growerdev.com.py";
+								$mail->Username = "info@growerdev.com.py";
 								$mail->Password = "Donkey3673518";
-								$mail->setFrom('noreply@growerdev.com.py', 'Sistema Facturación');
+								$mail->setFrom('info@growerdev.com.py', 'Sistema Facturación');
 
 								$mail->addAddress($value2["email"], $value2["nombre"]);
 								$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -161,7 +161,7 @@ class ControladorAperturas{
 																						</tr>
 																						<tr>
 																							<td width="100%" style="width:329px;height:auto">
-																								<img src="https://ci5.googleusercontent.com/proxy/0dEf3h65rfdfp0Hj5lfEbH7YIOEN-VuD2n0vGNmbLkPEpD7lcgLMruhDrZCwuU7d57LwyGZD1Je4lgw=s0-d-e1-ft#http://appignis.com/img/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
+																								<img src="https://drive.google.com/file/d/1qp3WkZiqXEQFEi6phMAkpsIwjxdrJoze/view" alt="illustration" border="0" class="CToWUd" data-bit="iit">
 																							</td>
 																						</tr>
 																						<tr>
