@@ -161,7 +161,7 @@ class ControladorAperturas{
 																						</tr>
 																						<tr>
 																							<td width="100%" style="width:329px;height:auto">
-																								<img src="https://drive.google.com/file/d/1qp3WkZiqXEQFEi6phMAkpsIwjxdrJoze/view" alt="illustration" border="0" class="CToWUd" data-bit="iit">
+																								<img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
 																							</td>
 																						</tr>
 																						<tr>
