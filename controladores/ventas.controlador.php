@@ -641,9 +641,6 @@ class ControladorVentas{
 					$mail->Encoding = 'base64';
 					$mail->isHTML(true);
 					$mail->Subject = 'Cierre de Caja';
-
-					
-
 					$body='<center>
 					<td width="100%" height="100" align="center">
 										
