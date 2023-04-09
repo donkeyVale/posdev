@@ -105,11 +105,6 @@ class ControladorAperturas{
 								$mail->Username = "info@growerdev.com.py";
 								$mail->Password = "Donkey3673518";
 								$mail->setFrom('info@growerdev.com.py', 'Sistema Facturación');
-								/*$mail->Host = "smtp.gmail.com";
-								$mail->Port = "465";
-								$mail->Username = "enviocorreoworkana@gmail.com";
-								$mail->Password = "ftydwxdbycayzpbt";
-								$mail->setFrom('enviocorreoworkana@gmail.com', 'Sistema Facturación');*/
 
 								$mail->addAddress($value2["email"], $value2["nombre"]);
 								$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
