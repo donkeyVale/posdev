@@ -239,8 +239,8 @@ order by v.id asc");
         //$stmt = Conexion::conectar()->prepare("SELECT id,monto_caja,status FROM cajas_sucursales WHERE DATE(fecha_creacion)='".$fecha."' and status=1");
 		//$stmt = Conexion::conectar()->prepare("select * from aperturas where estado = 1  AND DATE(fechaapertura)='$fecha'");
 		//$stmt = Conexion::conectar()->prepare("select count(*) as estado from aperturas where usuarioapertura=:usuario and estado=1");
-		$stmt = Conexion::conectar()->prepare("select estado,id from aperturas where usuarioapertura=:usuario and estado=1");
-		//$stmt = Conexion::conectar()->prepare("select count(*) as estado from aperturas where usuarioapertura=:usuario and estado=1");
+		//$stmt = Conexion::conectar()->prepare("select estado,id from aperturas where usuarioapertura=:usuario and estado=1");
+		$stmt = Conexion::conectar()->prepare("select count(*) as estado,(select max(id) from aperturas where usuarioapertura=:usuario and estado=1) as id from aperturas where usuarioapertura=:usuario and estado=1");
 		$stmt -> bindParam(":usuario", $usuario);
         $stmt->execute();
 		return $stmt->fetch();
@@ -266,12 +266,22 @@ order by v.id asc");
 		$stmt = null;
 	}
 
-	static public function totalVentasDias($cajaid, $usuario){
+	static public function totalVentasDias(){
+        $Object = new DateTime();
+        $Object->setTimezone(new DateTimeZone('America/Asuncion'));
+        $fecha = $Object->format("Y-m-d");
+		$stmt=Conexion::conectar()->prepare("SELECT distinct(metodo_pago)as metodo ,sum(total)as total_venta FROM ventas where date(fecha)='".$fecha."' group by metodo_pago;");
+		//$stmt=Conexion::conectar()->prepare("SELECT distinct(metodo_pago)as metodo ,sum(total)as total_venta FROM ventas where fecha>=(select fechaapertura from aperturas where id=" . $cajaid . ") and id_vendedor=" . $usuario . " group by metodo_pago;");
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
+	static public function totalVentasCaja($cajaid, $usuario){
         $Object = new DateTime();
         $Object->setTimezone(new DateTimeZone('America/Asuncion'));
         $fecha = $Object->format("Y-m-d");
 		//$stmt=Conexion::conectar()->prepare("SELECT distinct(metodo_pago)as metodo ,sum(total)as total_venta FROM ventas where date(fecha)='".$fecha."' group by metodo_pago;");
-		$stmt=Conexion::conectar()->prepare("SELECT distinct(metodo_pago)as metodo ,sum(total)as total_venta FROM ventas where fecha>=(select fechaapertura from aperturas where id=".$cajaid.") and id_vendedor=.".$usuario." group by metodo_pago;");
+		$stmt=Conexion::conectar()->prepare("SELECT distinct(metodo_pago)as metodo ,sum(total)as total_venta FROM ventas where fecha>=(select fechaapertura from aperturas where id=" . $cajaid . ") and id_vendedor=" . $usuario . " group by metodo_pago;");
 		$stmt->execute();
 		return $stmt->fetchAll();
 	}
