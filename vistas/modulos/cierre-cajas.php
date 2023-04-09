@@ -59,7 +59,7 @@ if($validarCaja['estado']==1){
 
           <form role="form" method="post" class="formularioCerrarCaja" >
               <?php $totalVentas = new ControladorVentas();
-              $totalVentas=$totalVentas->totalVentasDias($validarCaja['id']);
+              $totalVentas=$totalVentas->totalVentasDias();
               $total_venta = 0;
               ?>
 
@@ -147,13 +147,11 @@ if($validarCaja['estado']==1){
 
   </section>
 
+  
   <section class="content">
 
     <div class="row">
 
-      <!--=====================================
-      EL FORMULARIO
-      ======================================-->
       <div class="col-lg-2 col-md-2 col-xs-2"></div>
       <div class="col-lg-8 col-md-8 col-xs-8">
         
@@ -167,15 +165,12 @@ if($validarCaja['estado']==1){
   
               <div class="box">
 
-                <!--=====================================
-                ENTRADA DE LA APERTURA DE CAJA
-                ======================================-->
                   <?php $totalVentas = new ControladorVentas();
                     $totalVentas=$totalVentas->totalVentasDias();
                   $total_venta = 0;
                   ?>
                   <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
+
                     <div class="widget-user-header bg-red">
                       <h3>Ventas hasta el momento</h3>
                     </div>
@@ -216,7 +211,7 @@ if($validarCaja['estado']==1){
 
     </div>
    
-  </section>
+  </section> 
 
 </div>
 <?php } ?>
