@@ -624,11 +624,11 @@ class ControladorVentas{
 					$mail->isSMTP();
 					$mail->SMTPAuth = true;
 					// Login
-					$mail->Host = "smtp.gmail.com";
+					$mail->Host = "mail.growerdev.com.py";
 					$mail->Port = "465";
-					$mail->Username = "enviocorreoworkana@gmail.com";
-					$mail->Password = "ftydwxdbycayzpbt";
-					$mail->setFrom('enviocorreoworkana@gmail.com', 'Sistema Facturación');
+					$mail->Username = "info@growerdev.com.py";
+					$mail->Password = "Donkey3673518";
+					$mail->setFrom('info@growerdev.com', 'Sistema Facturación');
 
 					$mail->addAddress($value2["email"], $value2["nombre"]);
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -641,9 +641,6 @@ class ControladorVentas{
 					$mail->Encoding = 'base64';
 					$mail->isHTML(true);
 					$mail->Subject = 'Cierre de Caja';
-
-					
-
 					$body='<center>
 					<td width="100%" height="100" align="center">
 										
@@ -659,7 +656,7 @@ class ControladorVentas{
 							<tbody>
 								<tr>
 									<td width="100%" style="height:auto">
-										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://ci4.googleusercontent.com/proxy/pCJryLl6Ekyzi250cEoRTjFR-8Vg6I4OfKJt2FUh2W5nCLkzF-iOtvuyBufUKNyjzvUK=s0-d-e1-ft#http://appignis.com/img/logo.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
+										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/imageMail.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
 									</td>
 								</tr>
 							</tbody>
@@ -692,7 +689,7 @@ class ControladorVentas{
 																	</tr>
 																	<tr>
 																		<td width="100%" style="width:329px;height:auto">
-																			<img src="https://ci5.googleusercontent.com/proxy/0dEf3h65rfdfp0Hj5lfEbH7YIOEN-VuD2n0vGNmbLkPEpD7lcgLMruhDrZCwuU7d57LwyGZD1Je4lgw=s0-d-e1-ft#http://appignis.com/img/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
+																			<img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
 																		</td>
 																	</tr>
 																	<tr>
@@ -943,8 +940,8 @@ class ControladorVentas{
 		}
 	}
 
-	public function totalVentasDias(){
-		return ModeloVentas::totalVentasDias();
+	public function totalVentasDias($cajaid){
+		return ModeloVentas::totalVentasDias($cajaid,$_SESSION["id"]);
 	}
 
 	/*=============================================
