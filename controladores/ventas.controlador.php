@@ -940,8 +940,8 @@ class ControladorVentas{
 		}
 	}
 
-	public function totalVentasDias(){
-		return ModeloVentas::totalVentasDias();
+	public function totalVentasDias($cajaid){
+		return ModeloVentas::totalVentasDias($cajaid,$_SESSION["id"]);
 	}
 
 	/*=============================================

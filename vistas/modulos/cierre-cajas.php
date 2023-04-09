@@ -57,9 +57,9 @@ if($validarCaja['estado']==1){
           
           <div class="box-header with-border"></div>
 
-          <form role="form" method="post" class="formularioCerrarCaja">
+          <form role="form" method="post" class="formularioCerrarCaja" >
               <?php $totalVentas = new ControladorVentas();
-              $totalVentas=$totalVentas->totalVentasDias();
+              $totalVentas=$totalVentas->totalVentasDias($validarCaja['id']);
               $total_venta = 0;
               ?>
 
