@@ -628,7 +628,7 @@ class ControladorVentas{
 					$mail->Port = "465";
 					$mail->Username = "noreply@dg.com.py";
 					$mail->Password = "d1sast3R";
-					$mail->setFrom('noreply@growerdev.com', 'Sistema Facturación');
+					$mail->setFrom('noreply@dg.com', 'Sistema Facturación');
 					/*$mail->Host = "smtp.gmail.com";
 					$mail->Port = "465";
 					$mail->Username = "enviocorreoworkana@gmail.com";
