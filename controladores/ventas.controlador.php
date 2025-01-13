@@ -624,11 +624,11 @@ class ControladorVentas{
 					$mail->isSMTP();
 					$mail->SMTPAuth = true;
 					// Login
-					$mail->Host = "mail.growerdev.com.py";
+					$mail->Host = "mail.dg.com.py";
 					$mail->Port = "465";
-					$mail->Username = "info@growerdev.com.py";
-					$mail->Password = "Donkey3673518";
-					$mail->setFrom('info@growerdev.com', 'Sistema Facturación');
+					$mail->Username = "noreply@dg.com.py";
+					$mail->Password = "d1sast3R";
+					$mail->setFrom('noreply@growerdev.com', 'Sistema Facturación');
 					/*$mail->Host = "smtp.gmail.com";
 					$mail->Port = "465";
 					$mail->Username = "enviocorreoworkana@gmail.com";
@@ -661,7 +661,7 @@ class ControladorVentas{
 							<tbody>
 								<tr>
 									<td width="100%" style="height:auto">
-										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/imageMail.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
+										<a href="#m_3032233882618744908_m_4466486075483208078_" style="text-decoration:none"><img src="https://posdev.globaladm.com.py/vistas/img/plantilla/imageMail.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
 									</td>
 								</tr>
 							</tbody>
@@ -694,7 +694,7 @@ class ControladorVentas{
 																	</tr>
 																	<tr>
 																		<td width="100%" style="width:329px;height:auto">
-																			<img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
+																			<img src="https://posdev.globaladm.com.py/vistas/img/plantilla/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
 																		</td>
 																	</tr>
 																	<tr>

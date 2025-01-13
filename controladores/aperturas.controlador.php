@@ -100,11 +100,11 @@ class ControladorAperturas{
 								$mail->isSMTP();
 								$mail->SMTPAuth = true;
 								// Login
-								$mail->Host = "mail.growerdev.com.py";
+								$mail->Host = "mail.dg.com.py";
 								$mail->Port = "465";
-								$mail->Username = "info@growerdev.com.py";
-								$mail->Password = "Donkey3673518";
-								$mail->setFrom('info@growerdev.com.py', 'Sistema Facturación');
+								$mail->Username = "noreply@dg.com.py";
+								$mail->Password = "d1sast3R";
+								$mail->setFrom('noreply@dg.com.py', 'Sistema Facturación');
 
 								$mail->addAddress($value2["email"], $value2["nombre"]);
 								$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -130,7 +130,7 @@ class ControladorAperturas{
 												<tbody>
 													<tr>
 														<td width="100%" style="height:auto">
-															<a href="#m_6302990995433631177_m_-2542727450602248528_" style="text-decoration:none"><img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/imageMail.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
+															<a href="#m_6302990995433631177_m_-2542727450602248528_" style="text-decoration:none"><img src="https://posdev.globaladm.com.py/vistas/img/plantilla/imageMail.png" alt="" border="0" class="CToWUd" data-bit="iit"></a>
 														</td>
 													</tr>
 												</tbody>
@@ -161,7 +161,7 @@ class ControladorAperturas{
 																						</tr>
 																						<tr>
 																							<td width="100%" style="width:329px;height:auto">
-																								<img src="https://pospruebas.growerdev.com.py/vistas/img/plantilla/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
+																								<img src="https://posdev.globaladm.com.py/vistas/img/plantilla/illustration.png" alt="illustration" border="0" class="CToWUd" data-bit="iit">
 																							</td>
 																						</tr>
 																						<tr>
