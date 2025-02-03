@@ -5,6 +5,7 @@ if($_SESSION["perfil"] == "Especial"){
   </script>';
   return;
 }
+
 ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -12,7 +13,7 @@ if($_SESSION["perfil"] == "Especial"){
 <div class="content-wrapper">
     <?php $validaCaja = new ControladorVentas();
     $validarCaja=$validaCaja->consultaCajaAbierta();
-    if($validarCaja!="0"){
+    if($validarCaja['estado']!="0"){
       $cajaAperturada=$validaCaja->obtenerCajaAbiertaUsuario();
     ?>
     <h1>Crear venta</h1>
@@ -123,12 +124,12 @@ if($_SESSION["perfil"] == "Especial"){
                           <tr>
                             <td>
                               <div class="input-group">
-                                <input type="number" class="form-control input-lg" min="0" id="nuevoDescuento" name="nuevoDescuento" placeholder="0">
+                                <input type="text" class="form-control input-lg" min="0" placeholder="0" id="nuevoDescuento" name="nuevoDescuento">
                               </div>
                             </td>
                             <td>
                               <div class="input-group">
-                                <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0">
+                                <input type="text" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0">
                                 <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
                                 <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
                                 <span class="input-group-addon"><i class="fa fa-percent"></i></span>
@@ -343,4 +344,8 @@ if($_SESSION["perfil"] == "Especial"){
   <?php } ?>
   <script type="text/javascript">
     $('#seleccionarCliente').select2();
+    $('#nuevoDescuento').number(true, 2);
+    $('#nuevoImpuestoVenta').number(true, 2);
+    $("#nuevoPrecioProducto").number(true, 2);
+    //$('#').number(true, 2);
   </script>

@@ -82,6 +82,12 @@
 									<span>Lista de Calces</span>
 								</a>
 							</li>
+							<li>
+								<a href="aju-inventario">	
+									<i class="fa-solid fa-check"></i>
+									<span>Ajustes de Inventario</span>
+								</a>
+							</li>
 						</ul>
 					</li>';
 		}
@@ -207,10 +213,6 @@
 								<a href="reportes">
 									<i class="fa-solid fa-check"></i>
 									<span>Reporte de ventas</span>
-								</a>
-								<a href="control-ventas">
-									<i class="fa-solid fa-check"></i>
-									<span>Control de Ventas </span>
 								</a>
 								<a href="terminos-pago">
 									<i class="fa-solid fa-check"></i>

@@ -122,7 +122,7 @@ class ControladorAperturas{
 											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" object="drag-module-small">
 												<tbody>
 													<tr>
-														<td width="100%" height="50"></td>
+														<td width="100%" height="0"></td>
 													</tr>
 												</tbody>
 											</table>
@@ -138,7 +138,7 @@ class ControladorAperturas{
 											<table width="400" border="0" cellpadding="0" cellspacing="0" align="center" object="drag-module-small">
 												<tbody>
 													<tr>
-														<td width="100%" height="50"></td>
+														<td width="100%" height="0"></td>
 													</tr>
 												</tbody>
 											</table>
@@ -154,7 +154,7 @@ class ControladorAperturas{
 																				<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
 																					<tbody>
 																						<tr>
-																							<td width="100%" height="50"></td>
+																							<td width="100%" height="0"></td>
 																						</tr>														
 																						<tr>
 																							<td width="100%" height="20" style="font-size:1px;line-height:1px">&nbsp;</td>
@@ -165,7 +165,7 @@ class ControladorAperturas{
 																							</td>
 																						</tr>
 																						<tr>
-																							<td width="100%" height="50" style="font-size:1px;line-height:1px">&nbsp;</td>
+																							<td width="100%" height="20" style="font-size:1px;line-height:1px">&nbsp;</td>
 																						</tr>	
 																					</tbody>
 																				</table>		
@@ -180,8 +180,8 @@ class ControladorAperturas{
 																				<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
 																					<tbody>
 																						<tr>
-																							<td valign="middle" width="100%" style="text-align:center;font-family:Lato,Helvetica,Arial,sans-serif;font-size:20px;line-height:40px;font-weight:400;color:rgb(53,53,53)">
-																								Hola <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $value2["nombre"] . '</span>, 
+																							<td valign="middle" width="100%" style="text-align:left;font-family:Lato,Helvetica,Arial,sans-serif;font-size:20px;line-height:40px;font-weight:400;color:rgb(53,53,53)">
+																							Hola <span style="font-family:Lato,Helvetica,Arial,sans-serif;color:rgb(214,54,27)">' . $value2["nombre"] . '</span>, 
 																							</td>
 																						</tr>
 																					</tbody>
@@ -197,7 +197,7 @@ class ControladorAperturas{
 																				<table width="300" border="0" cellpadding="0" cellspacing="0" align="center" style="text-align:center;border-collapse:collapse">
 																					<tbody>
 																						<tr>
-																							<td width="100%" height="25" style="font-size:1px;line-height:1px">&nbsp;</td>
+																							<td width="100%" height="10" style="font-size:1px;line-height:1px">&nbsp;</td>
 																						</tr>
 																					</tbody>
 																				</table>

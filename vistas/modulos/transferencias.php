@@ -66,7 +66,7 @@
                 echo '<tr>
                   <td>'.$contador.'</td>
                   <td>'.$value["id"].'</td>
-                  <td>'.$value["fecha_registro"].'</td>
+                  <td>'.date("d-m-Y H:i:s", strtotime($value["fecha_registro"]) ).'</td>
                   <td>'.$value["usuario_transferencia"].'</td>
                   <td>'.$value["deposito_origen"].'</td>
                   <td>'.$value["deposito_destino"].'</td>

@@ -184,7 +184,9 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "transferencias" || 
          $_GET["ruta"] == "ver-transferencia" ||
          $_GET["ruta"] == "aprobar-transferencia" ||
-         $_GET["ruta"] == "recepcionar-transferencia"){
+         $_GET["ruta"] == "recepcionar-transferencia" ||
+         $_GET["ruta"] == "aju-inv-historico" ||
+         $_GET["ruta"] == "aju-inventario"){
 
         include "modulos/".$_GET["ruta"].".php";
 
@@ -239,5 +241,6 @@ CUERPO DOCUMENTO
 <script src="vistas/js/compras.js"></script>
 <script src="vistas/js/asignar-deposito.js"></script>
 <script src="vistas/js/transferencias.js"></script>
+<script src="vistas/js/aju-inventario.js"></script>
 </body>
 </html>

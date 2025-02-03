@@ -106,7 +106,7 @@ if($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor"){
 
                   }             
 
-                  echo '<td>'.$value["ultimo_login"].'</td>
+                  echo '<td>'.date("d-m-Y H:i:s", strtotime($value["ultimo_login"]) ).'</td>
                   <td>
 
                     <div class="btn-group">

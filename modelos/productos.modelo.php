@@ -19,7 +19,7 @@ class ModeloProductos{
 
 	/* Se agrega método para listar los productos del depósito */
 	static public function mdlListarProductosDepositos($valor){
-		$stmt = Conexion::conectar()->prepare("SELECT p.id,p.imagen,p.codigo,p.descripcion, c.categoria, p.precio_compra,p.precio_venta,pd.stock,u.unidad,tp.nombre 
+		$stmt = Conexion::conectar()->prepare("SELECT p.id,p.imagen,p.codigo,p.descripcion, c.categoria, p.precio_compra,p.precio_venta,pd.stock,u.unidad,tp.nombre,pd.id as id_stock 
             FROM productos p 
             left join categorias c on c.id=p.id_categoria 
             left join unidades u on u.id=p.id_unidad 
@@ -67,9 +67,15 @@ class ModeloProductos{
 	/*Productos en Depósitos*/ 
 	static public function mdlMostrarProductosDepositos($tabla, $item, $valor,$deposito,$usuario){
 		//if($item != null){
+		/*
 			$stmt = Conexion::conectar()->prepare("SELECT p.id,p.descripcion, pd.stock, p.precio_venta,(select count(*) from usuario_depositos where idUsuario=".$usuario." and idDeposito=".$deposito.") as permiso 
 						FROM productos p
 						inner join stock_producto pd on pd.id_producto=p.id and pd.id_deposito=".$deposito." where p.id=".$valor."");
+		*/
+		$stmt = Conexion::conectar()->prepare("SELECT p.*, pd.stock
+		FROM productos p
+		inner join stock_producto pd on pd.id_producto=p.id and pd.id_deposito=".$deposito." where p.id=".$valor."");
+
 			//$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY id DESC");
 			//$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -84,6 +90,7 @@ class ModeloProductos{
 		$stmt = null;
 	}
 
+	/* Productos por Depósito - Ing. Efraín Rincón */
 	static public function mdlProductoDeposito($deposito,$producto){
 		$stmt = Conexion::conectar()->prepare("SELECT p.id,p.descripcion, pd.stock, p.precio_venta 
 					FROM productos p
@@ -94,6 +101,14 @@ class ModeloProductos{
 		$stmt = null;
 	}
 
+	/* Historicos de Ajustes de Productos - Ing. Efraín Rincón */
+	static public function mdlAjusteInventarioHistorico($idstock){
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM stock_prod_hist p where p.id_stock_producto=".$idstock);
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
 
     static public function mdlMostrarProductosVentas($tabla, $item, $valor){
         if($item != null){
@@ -286,7 +301,10 @@ class ModeloProductos{
 
 	static public function mdlActualizarProductoDepositoVenta($producto, $deposito , $cantidad){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE stock_producto SET stock = stock - " . $cantidad . " WHERE id_producto=" . $producto . " and id_deposito=" . $deposito . "");
+		$stmt = Conexion::conectar()->prepare("UPDATE stock_producto SET stock = stock - :stock WHERE id_producto=:id_producto and id_deposito=:id_deposito");
+		$stmt -> bindParam(":stock",  $cantidad , PDO::PARAM_STR);
+		$stmt -> bindParam(":id_producto", $producto, PDO::PARAM_STR);
+		$stmt -> bindParam(":id_deposito", $deposito, PDO::PARAM_STR);
 		if($stmt -> execute()){
 			return "ok";
 		}else{
@@ -331,6 +349,49 @@ class ModeloProductos{
 		$stmt = Conexion::conectar()->prepare("update stock_producto set stock = stock +". $cantidad ." where id_producto=".$idProducto . " and id_deposito=". $idDeposito);
 		if($stmt -> execute()){
 			return "ok";
+		}else{
+			return "error";	
+		}
+		$stmt -> close();
+		$stmt = null;
+	}
+
+	static public function mdlActualizarProductoStockAjust($idDeposito, $idProducto, $cantidad, $usuario=' ', $nota=' '){
+		$stmt = Conexion::conectar()->prepare("update stock_producto set stock = (stock + :stock) where id_producto = :id_producto and id_deposito = :id_deposito");
+		$stmt -> bindParam(":stock",  $cantidad , PDO::PARAM_STR);
+		$stmt -> bindParam(":id_producto", $idProducto, PDO::PARAM_STR);
+		$stmt -> bindParam(":id_deposito", $idDeposito, PDO::PARAM_STR);
+		if($stmt -> execute()){
+
+			$stmt = Conexion::conectar()->prepare("update productos set stock = (stock + :stock) where id=:id");
+			$stmt -> bindParam(":stock",  $cantidad , PDO::PARAM_STR);
+			$stmt -> bindParam(":id", $idProducto, PDO::PARAM_STR);
+
+			if($stmt -> execute()){
+
+				$stmt = Conexion::conectar()->prepare("SELECT id FROM stock_producto where id_producto=:id_producto and id_deposito=:id_deposito");
+				$stmt -> bindParam(":id_producto",  $idProducto , PDO::PARAM_STR);
+				$stmt -> bindParam(":id_deposito", $idDeposito, PDO::PARAM_STR);
+				$stmt -> execute();
+				$row = $stmt -> fetch(PDO::FETCH_ASSOC);
+				$id = $row['id'];
+
+				$stmt = Conexion::conectar()->prepare("insert into stock_prod_hist (cantidad,nota,usuario,id_stock_producto) values (:cantidad,:nota,:usuario,:id)");
+				$stmt -> bindParam(":cantidad",  $cantidad , PDO::PARAM_STR);
+				$stmt -> bindParam(":nota", $nota, PDO::PARAM_STR);
+				$stmt -> bindParam(":usuario",  $usuario , PDO::PARAM_STR);
+				$stmt -> bindParam(":id", $id, PDO::PARAM_STR);
+
+				if($stmt -> execute()){
+					return "ok";
+				}
+				else {
+					return "error";
+				}
+			}
+			else {
+				return "error";	
+			}
 		}else{
 			return "error";	
 		}

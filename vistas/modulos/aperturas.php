@@ -41,10 +41,10 @@
                     <td>'.$value["sucursal"].'</td>
                     <td>'.$value["cajas"].'</td>
                     <td>'.$value["usuario"].'</td>
-                    <td>'.$value["fechaapertura"].'</td>
-                    <td>'.$value["monto_apertura"].'</td>
-                    <td>'.$value["fechacierre"].'</td>             
-                    <td>'.$value["monto_cierre"].'</td>
+                    <td>'.date("d-m-Y H:i:s", strtotime($value["fechaapertura"]) ).'</td>
+                    <td> Gs. '.number_format($value["monto_apertura"], 2, '.', ',').'</td>
+                    <td>'.date("d-m-Y H:i:s", strtotime($value["fechacierre"]) ).'</td>             
+                    <td> Gs. '.number_format($value["monto_cierre"], 2, '.', ',').'</td>
                     <td>'.$value["estado"].'</td>
                     <td>
                       <div class="btn-group">  

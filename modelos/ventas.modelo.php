@@ -90,15 +90,21 @@ where v.id= :valor");
 	}
 	/*INGRESAR DETALLE DE VENTA */
 	static public function mdlIngresarDetalleVenta($tabla, $datos){
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_venta, id_producto, cantidad, precio_unitario, total, id_vendedor,id_deposito) VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :total, :id_vendedor, :id_deposito )");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(id_venta, id_producto, cantidad, precio_unitario, total, id_vendedor) VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :total, :id_vendedor )");
 		$stmt->bindParam(":id_venta", $datos["id_venta"], PDO::PARAM_INT);
 		$stmt->bindParam(":id_producto", $datos["id_producto"], PDO::PARAM_INT);
 		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
 		$stmt->bindParam(":precio_unitario", $datos["precio_unitario"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_STR);
-		$stmt->bindParam(":id_deposito", $datos["id_deposito"], PDO::PARAM_INT);
-		$stmt->execute();
+		$stmt->bindParam(":id_vendedor", $datos["id_vendedor"], PDO::PARAM_INT);
+		//$stmt->bindParam(":id_deposito", $datos["id_deposito"], PDO::PARAM_INT);
+		if($stmt->execute()){
+			return "ok";
+		}else{
+			return "INSERT INTO $tabla(id_venta, id_producto, cantidad, precio_unitario, total, id_vendedor,id_deposito) VALUES (:id_venta, :id_producto, :cantidad, :precio_unitario, :total, :id_vendedor, :id_deposito )";
+		}
+		$stmt->close();
+		$stmt = null;
 	}
 
 
@@ -240,7 +246,7 @@ order by v.id asc");
 		//$stmt = Conexion::conectar()->prepare("select * from aperturas where estado = 1  AND DATE(fechaapertura)='$fecha'");
 		//$stmt = Conexion::conectar()->prepare("select count(*) as estado from aperturas where usuarioapertura=:usuario and estado=1");
 		//$stmt = Conexion::conectar()->prepare("select estado,id from aperturas where usuarioapertura=:usuario and estado=1");
-		$stmt = Conexion::conectar()->prepare("select count(*) as estado,(select max(id) from aperturas where usuarioapertura=:usuario and estado=1) as id from aperturas where usuarioapertura=:usuario and estado=1");
+		$stmt = Conexion::conectar()->prepare("select count(*) as estado,(select max(id) from aperturas where usuarioapertura=:usuario and estado=1) as id, monto_apertura from aperturas where usuarioapertura=:usuario and estado=1");
 		$stmt -> bindParam(":usuario", $usuario);
         $stmt->execute();
 		return $stmt->fetch();
@@ -265,6 +271,16 @@ order by v.id asc");
 		$stmt -> close();
 		$stmt = null;
 	}
+
+	static public function obtenerVentaCajaUsuario($cajaid){
+		$stmt = Conexion::conectar()->prepare("select v.id_vendedor, sum(v.neto) as neto, u.usuario from ventas as v INNER JOIN usuarios as u ON v.id_vendedor=u.id where v.codigo=:codigo and v.estado=1 group by v.id_vendedor order by v.id_vendedor");
+		$stmt -> bindParam(":codigo", $cajaid, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 
 	static public function totalVentasDias(){
         $Object = new DateTime();

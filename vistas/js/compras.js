@@ -71,7 +71,7 @@ $(".tablaCompras tbody").on("click", "button.agregarProducto", function() {
                     '<!-- Precio del producto -->' +
                     '<div class="col-xs-2 ingresoPrecio" style="padding-left:0px">' +
                     '<div class="input-group">' +
-                    '<input type="text" class="form-control nuevoPrecioProducto" precioReal="' + precio + '" name="nuevoPrecioProducto" value="' + precio + '" required>' +
+                    '<input type="text" class="form-control nuevoPrecioProducto" precioReal="' + precio + '" name="nuevoPrecioProducto" id="nuevoPrecioProducto" value="' + precio + '" required>' +
                     '</div>' +
                     '</div>' +
                     '<!-- Cantidad del producto -->' +
@@ -92,10 +92,10 @@ $(".tablaCompras tbody").on("click", "button.agregarProducto", function() {
                 // AGRUPAR PRODUCTOS EN FORMATO JSON
             listarProductos()
                 // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
-                //$(".nuevoPrecioProducto").number(true, 2);
+            $(".nuevoPrecioProducto").number(true, 2);
             $(".subTotalPrecioProducto").number(true, 2);
-
             $(".nuevoDescuento").number(true, 2);
+
             localStorage.removeItem("quitarProducto");
         }
     })
@@ -477,6 +477,7 @@ $(".tablas").on("click", ".btnImprimirFacturaCompra", function() {
 })
 
 $("#btnGuardar").click(function(e) {
+
     $valor = $("#seleccionarProveedor").val();
     if ($valor == "0") {
         e.preventDefault();
@@ -486,7 +487,8 @@ $("#btnGuardar").click(function(e) {
             showConfirmButton: true,
             confirmButtonText: "Cerrar"
         }).then(function(result) {});
-    } else {
+    } 
+    else {
         $valor = $("#listaProductos").val()
         if ($valor == "") {
             e.preventDefault();
@@ -496,7 +498,8 @@ $("#btnGuardar").click(function(e) {
                 showConfirmButton: true,
                 confirmButtonText: "Cerrar"
             }).then(function(result) {});
-        } else {
+        } 
+        else {
             $valor = $("#referencia").val();
             if ($valor == "") {
                 e.preventDefault();

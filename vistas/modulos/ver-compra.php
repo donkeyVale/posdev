@@ -31,7 +31,7 @@
                                         <div class="col-md-4">
                                             <div class="input-group">
                                                 <label for="fechaCompra">Fecha Compra</label>
-                                                <input type="date" class="form-control" id="fechaCompra" value="<?php echo $compra["fechacompra"]; ?>" readonly>
+                                                <input type="text" class="form-control" id="fechaCompra" name="fechaCompra" value="<?php echo date("d-m-Y", strtotime($compra["fechacompra"]) ) ; ?>" readonly>
                                             </div>
                                         </div>
                                         <div class="col-md-4">

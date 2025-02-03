@@ -39,7 +39,7 @@ if($_SESSION["perfil"] == "Especial"){
                     <td>'.$value["nombre"].'</td>
                     <td>'.$value["telefono"].'</td>
                     <td>'.$value["email"].'</td>
-                    <td>'.$value["fecha_nacimiento"].'</td>
+                    <td>'.date("d-m-Y H:i:s", strtotime($value["fecha_nacimiento"]) ).'</td>
                   </tr>';
             }
         ?>

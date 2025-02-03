@@ -25,13 +25,23 @@ class ModeloCompras{
 
 	static public function mdlMostrarCabeceraCompras($idCompra){
 		if($idCompra != null){
+			/*
 			$stmt = Conexion::conectar()->prepare("SELECT v.id,v.neto,v.total,v.productos,v.nrofactura, v.id_proveedor,u.nombre as comprador,c.nombre as proveedor,v.id_tipo_compra,fp.nombre as nombrePago ,
 					v.fechacompra,v.usuariocreacion, v.referencia, v.id_deposito, d.deposito FROM compras v 
 					inner join usuarios u on u.id=v.usuariocreacion 
 					inner join proveedores c on c.id=v.id_proveedor 
 					left join pospruebas_db.depositos d on d.id=v.id_deposito
 					inner join tipo_compra fp on fp.id=v.id_tipo_compra where v.id= :valor");
-			$stmt -> bindParam(":valor", $idCompra, PDO::PARAM_STR);
+			$stmt -> bindParam(":valor", $idCompra, PDO::PARAM_INT);
+			*/
+			$stmt = Conexion::conectar()->prepare("SELECT v.id,v.neto,v.total,v.productos,v.nrofactura, v.id_proveedor,u.nombre as comprador,c.nombre as proveedor,v.id_tipo_compra,fp.nombre as nombrePago ,
+			v.fechacompra as fechacompra,v.usuariocreacion, v.referencia, v.id_deposito,d.deposito FROM compras v 
+			inner join usuarios u on u.id=v.usuariocreacion 
+			inner join proveedores c on c.id=v.id_proveedor 
+			inner join depositos d on d.id=v.id_deposito
+			inner join tipo_compra fp on fp.id=v.id_tipo_compra where v.id= :valor");
+			$stmt -> bindParam(":valor", $idCompra, PDO::PARAM_INT);
+
 			$stmt -> execute();
 			return $stmt -> fetch();
 		}else{

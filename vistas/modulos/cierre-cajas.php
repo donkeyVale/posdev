@@ -81,11 +81,51 @@ if($validarCaja['estado']==1){
                     <div class="box-footer no-padding">
                       <ul class="nav nav-stacked">
                       <li><a href="#"><strong>Métodos de Pagos</strong> <span class="pull-right badge bg-blue">Totales</span></a></li>
-                      <?php if(isset($totalVentas)) { foreach ($totalVentas as $value) {   ?>
+                      <?php if(isset($totalVentas)) { foreach ($totalVentas as $value) { ?>
                        
-                        <li><a href="#"><?php echo $value['metodo']?> <span class="pull-right badge bg-blue"><?php  echo number_format($value['total_venta'],0); ?></span></a></li>
+                        <li><a href="#"><?php echo $value['metodo']?> <span class="pull-right badge bg-blue">Gs. <?php  echo number_format($value['total_venta'],0); ?></span></a></li>
                         <?php $total_venta = $total_venta + $value['total_venta']; } } ?>
-                      <li><a href="#"><strong>Total del Día</strong> <span class="pull-right badge bg-blue"><?php echo number_format($total_venta,0); ?></span></a></li>
+
+                        <li>&nbsp;</li>
+                        <li style="background-color:rgb(9, 173, 138) !important"><a href="#"><strong>Total del Día</strong> <span class="pull-right badge bg-blue">Gs. <?php echo number_format($total_venta,0); ?></span></a></li>
+
+                        <?php 
+                        $ventas_productos = ModeloVentas::listadoTotalProductosCajaAperturada($validarCaja['id']);
+                        ?>
+                        <li>&nbsp;</li>
+                        <li><a href="#"><strong>Descripción de Producto</strong> <span class="pull-right badge bg-blue">Cantidad</span></a></li>
+                        <?php
+
+                        $cantProd = 0;
+                        foreach ($ventas_productos as $value) {
+                          $cantProd =  $value['total'] + $cantProd;
+                        ?>
+                          <li><a href="#"><?php echo $value['descripcion']?> <span class="pull-right badge bg-blue"><?php  echo number_format($value['total'],0); ?></span></a></li>
+                          
+                        <?php
+                        }
+                        ?>
+                        <li>&nbsp;</li>
+                        <li style="background-color:rgb(9, 173, 138) !important"><a href="#"><strong>Total Productos</strong> <span class="pull-right badge bg-blue"><?php echo number_format($cantProd,0); ?></span></a></li>
+                        <li>&nbsp;</li>
+                        <li><a href="#"><strong>Vendedor</strong> <span class="pull-right badge bg-blue">Monto</span></a></li>
+                        <li>&nbsp;</li>
+                        <?php
+
+                        $ventasCajaVendedor = ModeloVentas::obtenerVentaCajaUsuario($validarCaja['id']);
+                        $montoCajaxVen= 0;
+                        foreach ($ventasCajaVendedor as $value) {
+                          $montoCajaxVen =  $value['neto'] + $montoCajaxVen;
+                        ?>
+                          <li><a href="#"><?php echo "(".$value['id_vendedor'].")"." ".$value['usuario'] ?> <span class="pull-right badge bg-blue">Gs. <?php  echo number_format($value['neto'],0); ?></span></a></li>
+                          
+                        <?php
+                        }
+                        ?>
+                        <li>&nbsp;</li>
+                        <li style="background-color:rgb(9, 173, 138) !important"><a href="#"><strong>Total Vendedores</strong> <span class="pull-right badge bg-blue">Gs. <?php echo number_format($montoCajaxVen,0); ?></span></a></li>
+                        <li>&nbsp;</li>
+                        <li style="background-color:rgb(9, 173, 138) !important"><a href="#"><strong>Monto de Apertura</strong> <span class="pull-right badge bg-blue">Gs. <?php echo number_format($validarCaja['monto_apertura'],0); ?></span></a></li>
                           <input type="hidden" value="<?php echo  $total_venta ?>" name="valor_cierre">
                           <input type="hidden" value="<?php echo  $validarCaja['id'] ?>" name="caja_id">
                       </ul>
@@ -93,6 +133,8 @@ if($validarCaja['estado']==1){
                   </div>
 
                 </div>
+
+                
                
           </div>
 

@@ -54,10 +54,10 @@ if($_SESSION["perfil"] == "Especial"){
                     <td>'.$value["email"].'</td>
                     <td>'.$value["telefono"].'</td>
                     <td>'.$value["direccion"].'</td>
-                    <td>'.$value["fecha_nacimiento"].'</td>             
+                    <td>'.date("d-m-Y", strtotime($value["fecha_nacimiento"]) ).'</td>             
                     <td>'.$value["compras"].'</td>
-                    <td>'.$value["ultima_compra"].'</td>
-                    <td>'.$value["fecha"].'</td>
+                    <td>'. date("d-m-Y H:i:s", strtotime($value["ultima_compra"]) ).'</td>
+                    <td>'.date("d-m-Y H:i:s", strtotime($value["fecha"]) ).'</td>
                     <td>
                       <div class="btn-group">  
                         <button class="btn btn-warning btnEditarCliente" data-toggle="modal" data-target="#modalEditarCliente" idCliente="'.$value["id"].'"><i class="fa fa-pencil"></i></button>';

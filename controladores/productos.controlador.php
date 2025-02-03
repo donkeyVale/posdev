@@ -27,6 +27,12 @@ class ControladorProductos{
 		return $respuesta;
 	}
 
+	/* I.N.G. Efraín Rincón */
+	static public function ctrAjusteInventarioHistorico($id_stock){
+		$respuesta = ModeloProductos::mdlAjusteInventarioHistorico($id_stock);
+		return $respuesta;
+	}
+
 	static public function ctrMostrarProductosDepositos($item, $valor, $deposito, $usuario){
 		$tabla = "productos";
 		$respuesta = ModeloProductos::mdlMostrarProductosDepositos($tabla, $item, $valor,$deposito,$usuario);
@@ -53,6 +59,25 @@ class ControladorProductos{
 		$respuesta = ModeloProductos::mdlMostrarStockCritico();
 		return $respuesta;
 	}
+
+	/* PRODUCTO POR DEPOSITO - ING. EFRAÍN RINCÓN */
+	static public function ctrProductoDeposito($id_deposito, $id_producto){
+		$respuesta = ModeloProductos::mdlProductoDeposito($id_deposito, $id_producto);
+		return $respuesta;
+	}
+
+	static public function ctrActualizarProductoStock($idDeposito, $idProducto, $cantidad){
+		$respuesta = ModeloProductos::mdlActualizarProductoStock($idDeposito, $idProducto, $cantidad);
+		return $respuesta;
+	}
+	
+
+	/* ACTUALIZAR STOCK DEL PRODUCTO - ING. EFRAÍN RINCÓN */
+	static public function ctrActualizarProductoStockAjust($idDeposito, $idProducto, $cantidad, $usuario, $nota){
+		$respuesta = ModeloProductos::mdlActualizarProductoStockAjust($idDeposito, $idProducto, $cantidad, $usuario, $nota);
+		return $respuesta;
+	}
+	
 
 	/*=============================================
 	CREAR PRODUCTO

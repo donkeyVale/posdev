@@ -41,13 +41,13 @@ if($_SESSION["perfil"] == "Especial"){
                       <div class="col-md-6">
                         <div class="input-group">
                           <label for="fechaCompra">Fecha Compra</label>
-                          <input type="date" class="form-control" id="fechaCompra" name="fechaCompra" value="<?php echo date("m/d/Y"); ?>" >
+                          <input type="date" class="form-control" id="fechaCompra" name="fechaCompra" value="<?php echo date("m/d/Y"); ?>" required>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="input-group">
                           <label for="referencia">Referencia</label>
-                          <input type="text" class="form-control" id="referencia" name="referencia">
+                          <input type="text" class="form-control" id="referencia" name="referencia" required>
                         </div>
                       </div>
                     </div>
@@ -58,7 +58,7 @@ if($_SESSION["perfil"] == "Especial"){
                       <div class="col-md-6">
                         <div class="input-group">
                           <label for="nroFactura">Nro.Factura</label>
-                          <input type="text" class="form-control" id="nroFactura" name="nroFactura">
+                          <input type="text" class="form-control" id="nroFactura" name="nroFactura" required>
                         </div>
                       </div>
                       <div class="col-md-6">
@@ -154,12 +154,12 @@ if($_SESSION["perfil"] == "Especial"){
                           <tr>
                             <td>
                               <div class="input-group">
-                                <input type="number" class="form-control input-lg" min="0" id="nuevoDescuento" name="nuevoDescuento" placeholder="0">
+                                <input type="text" class="form-control input-lg" min="0" id="nuevoDescuento" name="nuevoDescuento" placeholder="0">
                               </div>
                             </td>
                             <td>
                               <div class="input-group">
-                                <input type="number" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0">
+                                <input type="text" class="form-control input-lg" min="0" id="nuevoImpuestoVenta" name="nuevoImpuestoVenta" placeholder="0">
                                 <input type="hidden" name="nuevoPrecioImpuesto" id="nuevoPrecioImpuesto" required>
                                 <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" required>
                                 <span class="input-group-addon"><i class="fa fa-percent"></i></span>
@@ -317,6 +317,8 @@ if($_SESSION["perfil"] == "Especial"){
 
   <script type="text/javascript">
     $('#seleccionarProveedor').select2();
+    $("#nuevoPrecioProducto").number(true, 2);
+    $("#nuevoImpuestoVenta").number(true, 2);
 
     //$("#fechaCompra").datepicker();
     //$("#fechaCompra").datepicker("option", "dateFormat", 'dd/mm/yy');

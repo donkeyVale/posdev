@@ -59,8 +59,8 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
     $(this).addClass("btn-default");
     var datos = new FormData();
     datos.append("idProducto", idProducto);
-    datos.append("idDeposito", idDeposito);
-    datos.append("idUsuario", idUsuario);
+    //datos.append("idDeposito", idDeposito);
+    //datos.append("idUsuario", idUsuario);
     $.ajax({
         url: "ajax/productos.ajax.php",
         method: "POST",
@@ -70,9 +70,12 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
         processData: false,
         dataType: "json",
         success: function(respuesta) {
+            console.log(respuesta);
             var descripcion = respuesta["descripcion"];
+            //var descripcion = "PELOTA";
             var stock = respuesta["stock"];
             var precio = respuesta["precio_venta"];
+            //var precio = 15000;
             var permiso = respuesta["permiso"];
             if (permiso == 0) {
                 swal({
@@ -139,11 +142,12 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
                 // AGRUPAR PRODUCTOS EN FORMATO JSON
             listarProductosVentas()
                 // PONER FORMATO AL PRECIO DE LOS PRODUCTOS
-                //$(".nuevoPrecioProducto").number(true, 2);
+            $(".nuevoPrecioProducto").number(true, 2);
             $(".subTotalPrecioProducto").number(true, 2);
 
             $(".nuevoDescuento").number(true, 2);
             localStorage.removeItem("quitarProducto");
+
         }
     })
 });
@@ -240,7 +244,7 @@ $(".btnAgregarProducto").click(function() {
                 '<div class="col-xs-3 ingresoPrecio" style="padding-left:0px">' +
                 '<div class="input-group">' +
                 '<span class="input-group-addon"><i class="ion ion-social-usd"></i></span>' +
-                'Total<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" readonly required>' +
+                'Total<input type="text" class="form-control nuevoPrecioProducto" precioReal="" name="nuevoPrecioProducto" id="nuevoPrecioProducto" readonly required>' +
                 '</div>' +
                 '</div>' +
                 '</div>');
