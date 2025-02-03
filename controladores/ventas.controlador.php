@@ -631,12 +631,7 @@ class ControladorVentas{
 					$mail->Username = "noreply@dg.com.py";
 					$mail->Password = "d1sast3R";
 					$mail->setFrom('noreply@dg.com.py', 'Sistema Facturación');
-					/*$mail->Host = "smtp.gmail.com";
-					$mail->Port = "465";
-					$mail->Username = "enviocorreoworkana@gmail.com";
-					$mail->Password = "ftydwxdbycayzpbt";
-					$mail->setFrom('enviocorreoworkana@gmail.com', 'Sistema Facturación');*/
-
+					
 					$mail->addAddress($value2["email"], $value2["nombre"]);
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 					$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
