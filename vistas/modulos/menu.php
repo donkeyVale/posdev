@@ -14,7 +14,7 @@
 						<a href="#">
 							<i class="fa fa-user"></i>
 							<span>Usuarios</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -41,7 +41,7 @@
 						<a href="#">
 							<i class="fa fa-barcode"></i>
 							<span>Productos</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -97,7 +97,7 @@
 						<a href="#">
 							<i class="fa-solid fa-warehouse"></i>
 							<span>Depósitos</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -117,7 +117,7 @@
 						<a href="#">
 							<i class="fa fa-users"></i>
 							<span>Clientes</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -150,7 +150,7 @@
 						<a href="#">
 							<i class="fa fa-truck"></i>
 							<span>Proveedores</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -170,7 +170,7 @@
 						<a href="#">
 							<i class="fa-solid fa-money-bill-1-wave"></i>
 							<span>Gastos</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -190,7 +190,7 @@
 						<a href="#">
 							<i class="fa-solid fa-cart-shopping"></i>
 							<span>Ventas</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -233,7 +233,7 @@
 						<a href="#">
 							<i class="fa-solid fa-cash-register"></i>
 							<span>Cajas</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -259,7 +259,7 @@
 						<a href="#">
 							<i class="fa-solid fa-wallet"></i>
 							<span>Compras</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
@@ -285,7 +285,7 @@
 						<a href="#">
 							<i class="fa-solid fa-dolly"></i>
 							<span>Transferencias</span>
-							<span class="pull-right-container">
+							<span class="pull-right-container" style="display: none;">
 								<i class="fa fa-angle-left pull-right"></i>
 							</span>
 						</a>
