@@ -91,7 +91,8 @@ class ControladorVentas{
 				$valor1b = $value["stock"];
 				$idDeposito = $value["iddeposito"];
 
-				//$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
+				//Se activo - 12-02-2025 - ING. EFRAÍN RINCÓN
+				$nuevoStock = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1b, $valor1b, $valor);
 				
 				ModeloProductos::mdlActualizarProductoDepositoVenta($valor, $idDeposito , $value["cantidad"]);
 
@@ -448,7 +449,7 @@ class ControladorVentas{
 				$cliente = ControladorClientes::ctrMostrarClientes("id", $item["id_cliente"]);
 				$vendedor = ControladorUsuarios::ctrMostrarUsuarios("id", $item["id_vendedor"]);
 			 echo utf8_decode("<tr>
-			 			<td style='border:1px solid #eee;'>".$item["codigo"]."</td> ");
+			 			<td style='border:1px solid #eee;'>".$item["nvo_id"]."</td> ");
              if(is_array($cliente)){
                  echo utf8_decode("<td style='border:1px solid #eee;'>".  $cliente["nombre"] ."</td>");
              } else {

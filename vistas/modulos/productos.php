@@ -23,7 +23,14 @@ if($_SESSION["perfil"] == "Vendedor"){
           Agregar producto
         </button>
         <?php
-            echo '<a href="vistas/modulos/descargar-reportei.php">';
+
+            if(isset($_GET["cmbdepositoProducto"])){
+              $idDeposito = $_GET["cmbdepositoProducto"];
+            }else{
+              $idDeposito = 1;
+            }
+
+            echo "<a href='vistas/modulos/descargar-reportei.php?id=$idDeposito'>";
         ?>
          <button class="btn btn-success" style="margin-top:1px">Descargar reporte en Excel</button>
         <?php echo '</a>';?>
@@ -73,11 +80,6 @@ if($_SESSION["perfil"] == "Vendedor"){
           </thead>
           <tbody>
           <?php
-            if(isset($_GET["cmbdepositoProducto"])){
-              $idDeposito = $_GET["cmbdepositoProducto"];
-            }else{
-              $idDeposito = 1;
-            }
             $productos = ControladorProductos::ctrListarProductosDepositos($idDeposito);
             //$productos = ControladorProductos::ctrListarProductos();
             foreach ($productos as $key => $value) {
@@ -87,8 +89,8 @@ if($_SESSION["perfil"] == "Vendedor"){
                       <td>'.$value["codigo"].'</td>
                       <td>'.$value["descripcion"].'</td>
                       <td>'.$value["categoria"].'</td>
-                      <td>'.$value["precio_compra"].'</td>
-                      <td>'.$value["precio_venta"].'</td>             
+                      <td>Gs. '.number_format($value["precio_compra"], 2, '.', ',').'</td>
+                      <td>Gs. '.number_format($value["precio_venta"], 2, '.', ',').'</td>    
                       <td>'.$value["stock"].'</td>
                       <td>'.$value["unidad"].'</td>
                       <td>'.$value["nombre"].'</td>

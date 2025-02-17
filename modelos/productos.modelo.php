@@ -419,4 +419,18 @@ class ModeloProductos{
 		$stmt -> close();
 		$stmt = null;
 	}
+
+	static public function mdlMostrarProductosStock($valor){
+		$stmt = Conexion::conectar()->prepare("SELECT p.id,p.codigo,p.descripcion, c.categoria, p.precio_compra,p.precio_venta,pd.stock
+		FROM productos p 
+		left join categorias c on c.id=p.id_categoria 
+		left join unidades u on u.id=p.id_unidad 
+		left join tipo_producto tp on tp.id=p.tipo_producto  
+		inner join stock_producto pd on pd.id_producto=p.id and pd.id_deposito=" . $valor . " where p.estado=1 and p.hijo = 0 order by p.descripcion asc");
+		$stmt -> execute();
+		return $stmt -> fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 }

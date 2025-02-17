@@ -22,7 +22,8 @@ if($_SESSION["perfil"] == "Especial"){
         <!--=====================================
         EL FORMULARIO
         ======================================-->
-        <div class="col-lg-5 col-xs-12">
+        <!--<div class="col-lg-6 col-xs-12">-->
+        <div class="col-lg-6">
           <div class="box box-success">
             <div class="box-header with-border"></div>
             <form role="form" method="post" class="formularioDeposito">
@@ -37,7 +38,7 @@ if($_SESSION["perfil"] == "Especial"){
                   <br/>
                   <div class="row">
                    <div class="form-group">
-                     <div class="col-md-7">
+                     <div class="col-md-5">
                         <span class="input-group-addon">
                           <label for="seleccionarUsuario">Usuario</label>
                           <select class="form-control" id="seleccionarUsuario" name="seleccionarUsuario" required>
@@ -122,14 +123,15 @@ if($_SESSION["perfil"] == "Especial"){
             </form>
           </div>      
         </div>
-        <!--=====================================
+      <!--=====================================
         LA TABLA DE PRODUCTOS
         ======================================-->
-        <div class="col-lg-7 hidden-md hidden-sm hidden-xs">    
+        <!--<div class="col-lg-7 hidden-md hidden-sm hidden-xs">    -->
+        <div class="col-lg-6">
           <div class="box box-warning">
             <div class="box-header with-border"></div>
             <div class="box-body">    
-              <table class="table table-bordered table-striped dt-responsive tablaDepositosAsignar">    
+              <table class="table table-bordered table-striped small tablaDepositosAsignar">    
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>

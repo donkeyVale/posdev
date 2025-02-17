@@ -22,7 +22,7 @@ if($_SESSION["perfil"] == "Especial"){
         <!--=====================================
         EL FORMULARIO
         ======================================-->
-        <div class="col-lg-5 col-xs-12">
+        <div class="col-lg-6">
           <div class="box box-success">
             <div class="box-header with-border"></div>
             <form role="form" method="post" class="formularioCompra">
@@ -205,11 +205,12 @@ if($_SESSION["perfil"] == "Especial"){
         <!--=====================================
         LA TABLA DE PRODUCTOS
         ======================================-->
-        <div class="col-lg-7 hidden-md hidden-sm hidden-xs">    
-          <div class="box box-warning">
+        <div class="col-lg-6">    
+          <div class="box">
             <div class="box-header with-border"></div>
             <div class="box-body">    
-              <table class="table table-bordered table-striped dt-responsive tablaCompras">    
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped small tablaCompras" width="100%">    
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>
@@ -220,8 +221,11 @@ if($_SESSION["perfil"] == "Especial"){
                     <th>Acciones</th>
                   </tr>
                 </thead>
+                <tbody>
+                </tbody>
               </table>
             </div>
+          </div>
           </div>
         </div>
       </div> 

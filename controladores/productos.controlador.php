@@ -553,7 +553,7 @@ class ControladorProductos{
 			/*=============================================
 			CREAMOS EL ARCHIVO DE EXCEL
 			=============================================*/
-			$Name = "reporte".'.xls';
+			$Name = "reporte-stock".'.xls';
 			header('Expires: 0');
 			header('Cache-control: private');
 			header("Content-type: application/vnd.ms-excel"); // Archivo de Excel
@@ -598,4 +598,64 @@ class ControladorProductos{
 		 		}
 			echo "</table>";
 	}
+
+	/*=============================================
+	DESCARGAR EXCEL
+	=============================================*/
+	public function ctrDescargarReporteStock($idDeposito){
+		$productos = ModeloProductos::mdlMostrarProductosStock($idDeposito);
+				/*=============================================
+				CREAMOS EL ARCHIVO DE EXCEL
+				=============================================*/
+				$Name = "reporte-stock".'.xls';
+				header('Expires: 0');
+				header('Cache-control: private');
+				header("Content-type: application/vnd.ms-excel"); // Archivo de Excel
+				header("Cache-Control: cache, must-revalidate"); 
+				header('Content-Description: File Transfer');
+				header('Last-Modified: '.date('D, d M Y H:i:s'));
+				header("Pragma: public"); 
+				header('Content-Disposition:; filename="'.$Name.'"');
+				header("Content-Transfer-Encoding: binary");
+				echo utf8_decode("<table border='1'> 
+						<tr> 
+						<td style='font-weight:bold; border:1px solid #eee;'>ID</td> 
+						<td style='font-weight:bold; border:1px solid #eee;'>CODIGO</td>
+						<td style='font-weight:bold; border:1px solid #eee;'>DESCRIPCION</td>
+						<td style='font-weight:bold; border:1px solid #eee;'>CATEGORIA</td>
+						<td style='font-weight:bold; border:1px solid #eee;'>PRECIO COMPRA</td>
+						<td style='font-weight:bold; border:1px solid #eee;'>PRECIO VENTA</td>
+						<td style='font-weight:bold; border:1px solid #eee;'>STOCK</td>
+						</tr>");
+					 echo utf8_decode("</td><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						 echo utf8_decode($valueProductos["id"]."<br>");
+					 }
+					 echo utf8_decode("</td><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						 echo utf8_decode($valueProductos["codigo"]."<br>");
+					 }
+					echo utf8_decode("</td><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						 echo utf8_decode($valueProductos["descripcion"]."<br>");
+					 }
+					echo utf8_decode("</td ><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						 echo utf8_decode($valueProductos["categoria"]."<br>");
+					 }
+					 echo utf8_decode("</td ><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						 echo utf8_decode("Gs. ".number_format($valueProductos['precio_compra'], 2, '.', ',')."<br>");
+						 
+					 }
+					 echo utf8_decode("</td ><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						 echo utf8_decode("Gs. ".number_format($valueProductos['precio_venta'], 2, '.', ',')."<br>");
+					 }
+					 echo utf8_decode("</td ><td style='border:1px solid #eee;'>");	
+					 foreach ($productos as $key => $valueProductos) {
+						echo utf8_decode($valueProductos["stock"]."<br>");
+					}
+				echo "</table>";
+		}
 }

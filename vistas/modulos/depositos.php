@@ -25,7 +25,7 @@ if($_SESSION["perfil"] == "Vendedor"){
       </div>
 
       <div class="box-body">
-        
+      <!--<div class="table-responsive">-->
         <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
           <thead>
             <tr>
@@ -65,6 +65,7 @@ if($_SESSION["perfil"] == "Vendedor"){
           </tbody>
        </table>
       </div>
+      <!--</div>-->
     </div>
   </section>
 </div>

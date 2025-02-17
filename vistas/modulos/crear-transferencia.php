@@ -23,7 +23,8 @@ if($_SESSION["perfil"] == "Especial"){
         <!--=====================================
         EL FORMULARIO
         ======================================-->
-        <div class="col-lg-5 col-xs-12">
+        <!--<div class="col-lg-6 col-xs-12">-->
+          <div class="col-lg-6">
           <div class="box box-success">
             <div class="box-header with-border"></div>
             <form role="form" method="post" class="formularioTransferencia">
@@ -121,15 +122,17 @@ if($_SESSION["perfil"] == "Especial"){
         <!--=====================================
         LA TABLA DE PRODUCTOS
         ======================================-->
-        <div class="col-lg-7 hidden-md hidden-sm hidden-xs">    
+        <!--<div class="col-lg-7 hidden-md hidden-sm hidden-xs">    -->
+          <div class="col-lg-6">
           <div class="box box-warning">
             <div class="box-header with-border"></div>
             <div class="box-body">    
-              <table class="table table-bordered table-striped dt-responsive tablaTransferencias">    
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped small tablaTransferencias" width="100%">    
                 <thead>
                   <tr>
-                    <th style="width: 10px">#</th>
-                    <th style="width: 50px">Imagen</th>
+                    <th style="width:10px">#</th>
+                    <th>Imagen</th>
                     <th>Código</th>
                     <th>Descripcion</th>
                     <th>Stock</th>
@@ -168,6 +171,7 @@ if($_SESSION["perfil"] == "Especial"){
                   ?>
                 </tbody>
               </table>
+            </div>
             </div>
           </div>
         </div>

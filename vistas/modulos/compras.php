@@ -53,6 +53,7 @@
               <th>Depósito</th>
               <th>Total</th> 
               <th>Fecha Compra</th> 
+              <th>Acciones</th> 
             </tr> 
           </thead>
           <tbody>
@@ -91,11 +92,11 @@
             }
             ?>
           </tbody>
-        </table>
-       <?php
+        </table> 
+        <?php
           $eliminarCompra = new ControladorCompras();
           $eliminarCompra -> ctrEliminarCompra();
-        ?>       
+        ?>      
       </div>
     </div>
   </section>

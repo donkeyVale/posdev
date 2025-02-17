@@ -186,6 +186,31 @@
 		}
 
 		if($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor"){
+
+			echo '<li class="treeview">
+			<a href="#">
+				<i class="fa-solid fa-cash-register"></i>
+				<span>Cajas</span>
+				<span class="pull-right-container" style="display: none;">
+					<i class="fa fa-angle-left pull-right"></i>
+				</span>
+			</a>
+			<ul class="treeview-menu">
+				<li>
+					<a href="aperturas">
+						<i class="fa-solid fa-check"></i>
+						<span>Apertura de Cajas</span>
+					</a>
+				</li>
+				<li>
+					<a href="cierre-cajas">
+						<i class="fa-solid fa-check"></i>
+						<span>Cierre de Cajas</span>
+					</a>
+				</li>';
+	echo 	'</ul>
+		</li>';
+
 			echo 	'<li class="treeview">
 						<a href="#">
 							<i class="fa-solid fa-cart-shopping"></i>
@@ -228,30 +253,11 @@
 								</a>
 							</li>';
 				echo '</ul>
-					</li>
-					<li class="treeview">
-						<a href="#">
-							<i class="fa-solid fa-cash-register"></i>
-							<span>Cajas</span>
-							<span class="pull-right-container" style="display: none;">
-								<i class="fa fa-angle-left pull-right"></i>
-							</span>
-						</a>
-						<ul class="treeview-menu">
-							<li>
-								<a href="aperturas">
-									<i class="fa-solid fa-check"></i>
-									<span>Apertura de Cajas</span>
-								</a>
-							</li>
-							<li>
-								<a href="cierre-cajas">
-									<i class="fa-solid fa-check"></i>
-									<span>Cierre de Cajas</span>
-								</a>
-							</li>';
-				echo 	'</ul>
 					</li>';
+					}
+				if($_SESSION["perfil"] == "Administrador" || $_SESSION["perfil"] == "Vendedor"){
+
+
 		}
 
 		if($_SESSION["perfil"] == "Administrador" ){

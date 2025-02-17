@@ -73,11 +73,11 @@ if($_SESSION["perfil"] == "Especial" || $_SESSION["perfil"] == "Vendedor"){
 
         if(isset($_GET["fechaInicial"])){
 
-          echo '<a href="vistas/modulos/descargar-reporte.php?reporte=reporte&fechaInicial='.$_GET["fechaInicial"].'&fechaFinal='.$_GET["fechaFinal"].'">';
+          echo '<a href="vistas/modulos/descargar-reporte.php?reporte=reporte-ventas&fechaInicial='.$_GET["fechaInicial"].'&fechaFinal='.$_GET["fechaFinal"].'">';
 
         }else{
 
-           echo '<a href="vistas/modulos/descargar-reporte.php?reporte=reporte">';
+           echo '<a href="vistas/modulos/descargar-reporte.php?reporte=reporte-ventas">';
 
         }         
 

@@ -59,7 +59,7 @@ $(".tablaVentas tbody").on("click", "button.agregarProducto", function() {
     $(this).addClass("btn-default");
     var datos = new FormData();
     datos.append("idProducto", idProducto);
-    //datos.append("idDeposito", idDeposito);
+    datos.append("idDeposito", idDeposito);
     //datos.append("idUsuario", idUsuario);
     $.ajax({
         url: "ajax/productos.ajax.php",

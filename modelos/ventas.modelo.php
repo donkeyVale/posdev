@@ -10,7 +10,7 @@ class ModeloVentas{
 	static public function mdlMostrarVentas($tabla, $item, $valor){
 		if($item != null){
 			//$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla v LEFT JOIN cajas_ventas cv ON cv.id_venta=v.id LEFT JOIN cajas_sucursales cs ON cs.id=cv.id_caja WHERE $item = :$item ORDER BY v.id ASC");
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM ventas WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT *, CONCAT('V-',LPAD(id,8,'0')) AS nvo_id FROM ventas WHERE $item = :$item");
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt -> execute();
 			return $stmt -> fetch();
@@ -158,11 +158,11 @@ where v.id= :valor");
 	=============================================*/	
 	static public function mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal){
 		if($fechaInicial == null){
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla v ORDER BY v.id ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT *, CONCAT('V-',LPAD(v.id,8,'0')) AS nvo_id FROM $tabla v ORDER BY v.id ASC");
 			$stmt -> execute();
 			return $stmt -> fetchAll();	
 		}else if($fechaInicial == $fechaFinal){
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla v WHERE DATE(fecha)='$fechaFinal'");
+			$stmt = Conexion::conectar()->prepare("SELECT *, CONCAT('V-',LPAD(v.id,8,'0')) AS nvo_id FROM $tabla v WHERE DATE(fecha)='$fechaFinal'");
 			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 			$stmt -> execute();
 			return $stmt -> fetchAll();
@@ -174,9 +174,9 @@ where v.id= :valor");
 			$fechaFinal2 ->add(new DateInterval("P1D"));
 			$fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
 			if($fechaFinalMasUno == $fechaActualMasUno){
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla v WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
+				$stmt = Conexion::conectar()->prepare("SELECT *, CONCAT('V-',LPAD(v.id,8,'0')) AS nvo_id FROM $tabla v WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'");
 			}else{
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla v WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+				$stmt = Conexion::conectar()->prepare("SELECT *, CONCAT('V-',LPAD(v.id,8,'0')) AS nvo_id FROM $tabla v WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 			}
 			$stmt -> execute();
 			return $stmt -> fetchAll();

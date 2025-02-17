@@ -113,6 +113,7 @@
                                 $orden = "id";
                                 echo '<tr><td>'.$contador . '</td><td>'. $valor . '</td><td>'.$value["descripcion"].'</td>
                                     <td>' . $value["cantidad"] . '</td><td>' . $value["precio"] . '</td><td>' . $value["total"] . '</td></tr>';
+                                $contador++;
                               }
                             ?>
                             </tbody>
